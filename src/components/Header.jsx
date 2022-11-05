@@ -11,7 +11,7 @@ const Header = ({ navToggle }) => (
     <StyledLogo src={Logo} alt="Logo" />
     <StyledNavMain>
       <StyledNav>
-        <Link to="/">Home</Link>
+        <Link to="/learn">Home</Link>
         {/* <Link to="/menu">Menu</Link> */}
         <Link to="/about">About</Link>
         {/* <Link to="/contact">Contact</Link> */}
