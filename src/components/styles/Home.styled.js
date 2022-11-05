@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { animation, breakpoint, fontSize } from '../Helper';
 
-export const StyledHome = styled.main`
+export const StyledHome = styled.div`
   color: ${({ theme }) => theme.color};
   height: 75vh;
   padding: 0 5rem;

@@ -6,9 +6,9 @@ import { StyledNavDropDown } from './styles/Header.styled';
 const NavDropDown = ({ isOpen, navToggle }) => (
   <StyledNavDropDown isOpen={isOpen} onClick={navToggle}>
     <Link to="/learn">Home</Link>
-    {/* <Link to="/menu">Menu</Link> */}
     <Link to="/about">About</Link>
-    {/* <Link to="/contact">Contact</Link> */}
+    <Link to="/admin">Manage</Link>
+    <Link to="/contact">Contact</Link>
   </StyledNavDropDown>
 );
 

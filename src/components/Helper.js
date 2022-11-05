@@ -53,3 +53,10 @@ export async function getCourses() {
   const coursesList = courseSnapshot.docs.map((doc) => doc.data());
   return coursesList;
 }
+
+export async function getCreds() {
+  const authCol = collection(db, 'auth');
+  const authSnapshot = await getDocs(authCol);
+  const authList = authSnapshot.docs.map((doc) => doc.data());
+  return authList;
+}

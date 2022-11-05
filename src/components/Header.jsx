@@ -12,9 +12,9 @@ const Header = ({ navToggle }) => (
     <StyledNavMain>
       <StyledNav>
         <Link to="/learn">Home</Link>
-        {/* <Link to="/menu">Menu</Link> */}
         <Link to="/about">About</Link>
-        {/* <Link to="/contact">Contact</Link> */}
+        <Link to="/admin">Manage</Link>
+        <Link to="/contact">Contact</Link>
       </StyledNav>
       {/* <button type="button" onClick={toggleTheme}>
         {theme === 'dark' && <DarkIcon />}

@@ -6,6 +6,8 @@ import Home from './components/pages/Home';
 import { color } from './components/Helper';
 import { GlobalStyles } from './components/styles/Global';
 import NavDropDown from './components/NavDropDown';
+import About from './components/pages/About/About';
+import AdminPage from './components/pages/AdminPage/AdminPage';
 
 function App() {
   const [theme, setTheme] = useState('light');
@@ -39,8 +41,8 @@ function App() {
       <NavDropDown isOpen={isOpen} navToggle={navToggle} />
       <Routes>
         <Route path="/learn" element={<Home />} />
-        {/* <Route path="/about" component={About} />
-        <Route path="/menu" component={Menu} /> */}
+        <Route path="/about" element={<About />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </ThemeProvider>
   );
