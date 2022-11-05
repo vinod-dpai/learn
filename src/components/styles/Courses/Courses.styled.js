@@ -3,19 +3,17 @@ import { animation, breakpoint, fontSize } from '../../Helper';
 
 export const StyledCourseContainer = styled.div`
   margin-top: 2rem;
+  width: 100%;
   h1 {
     text-align: left;
+    margin-left: 0.5rem;
   }
 `;
 
 export const StyledCourseMain = styled.div`
   display: flex;
   align-items: center;
-  flex-direction: column;
   flex-wrap: wrap;
-  gap: 1rem;
-  max-height: 70vh;
-  overflow-y: auto;
 
   @media (min-width: ${breakpoint.md}) {
     display: flex;
@@ -24,11 +22,12 @@ export const StyledCourseMain = styled.div`
 `;
 
 export const StyledCourseContent = styled.div`
-  width: 90%;
+  width: 100%;
   height: 10rem;
-  border: 1px solid #1f2937;
+  border: 1px solid ${(theme) => theme.color};
   padding: 0.5rem;
   border-radius: 0.25rem;
+  margin: 0.5rem;
 
   h2 {
     font-size: ${fontSize.md};
@@ -36,5 +35,8 @@ export const StyledCourseContent = styled.div`
   @media (min-width: ${breakpoint.md}) {
     display: flex;
     flex-direction: row;
+    min-width: 20rem;
+    max-width: 30rem;
+    width: auto;
   }
 `;
