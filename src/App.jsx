@@ -38,7 +38,7 @@ function App() {
       <Header isOpen={isOpen} navToggle={navToggle} theme={theme} toggleTheme={toggleTheme} />
       <NavDropDown isOpen={isOpen} navToggle={navToggle} />
       <Routes>
-        <Route path="/" exact element={<Home />} />
+        <Route path="/learn" element={<Home />} />
         {/* <Route path="/about" component={About} />
         <Route path="/menu" component={Menu} /> */}
       </Routes>
