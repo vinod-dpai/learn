@@ -7,7 +7,7 @@ const NavDropDown = ({ isOpen, navToggle }) => (
   <StyledNavDropDown isOpen={isOpen} onClick={navToggle}>
     <Link to="/learn">Home</Link>
     <Link to="/about">About</Link>
-    <Link to="/admin">Manage</Link>
+    {/* <Link to="/admin">Manage</Link> */}
     <Link to="/contact">Contact</Link>
   </StyledNavDropDown>
 );

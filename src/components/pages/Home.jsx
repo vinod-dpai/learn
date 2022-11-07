@@ -1,23 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 import { StyledHome, StyledSearchContainer, StyledSearchBox, StyledFilterIcon } from '../styles/Home.styled';
 import Courses from './Courses/Courses';
 import FilterIcon from '../../icons/filter.webp';
 import UserModal from './UserModal';
-import { getCourses } from '../Helper';
 
-const Home = () => {
-  const [courses, setCourses] = useState([]);
+const Home = ({ courses }) => {
   const [filteredCourses, setFilteredCourses] = useState(courses);
   const [searchText, setSearchText] = useState('');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await getCourses();
-      setCourses(res);
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     setFilteredCourses(courses);
@@ -45,3 +35,7 @@ const Home = () => {
 };
 
 export default Home;
+
+Home.propTypes = {
+  courses: PropTypes.array.isRequired,
+};

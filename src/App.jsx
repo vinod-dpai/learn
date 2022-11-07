@@ -3,16 +3,26 @@ import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './components/pages/Home';
-import { color } from './components/Helper';
+import { color, getCoursesFromDB } from './components/Helper';
 import { GlobalStyles } from './components/styles/Global';
 import NavDropDown from './components/NavDropDown';
 import About from './components/pages/About/About';
-import AdminPage from './components/pages/AdminPage/AdminPage';
+// import AdminPage from './components/pages/AdminPage/AdminPage';
+import Course from './components/pages/Courses/Course';
 
 function App() {
   const [theme, setTheme] = useState('light');
-
   const [isOpen, setIsOpen] = useState(false);
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getCoursesFromDB();
+      setCourses(res);
+    };
+
+    fetchData();
+  }, []);
 
   const navToggle = () => {
     setIsOpen(!isOpen);
@@ -40,9 +50,9 @@ function App() {
       <Header isOpen={isOpen} navToggle={navToggle} theme={theme} toggleTheme={toggleTheme} />
       <NavDropDown isOpen={isOpen} navToggle={navToggle} />
       <Routes>
-        <Route path="/learn" element={<Home />} />
+        <Route path="/learn" element={<Home courses={courses} />} />
         <Route path="/about" element={<About />} />
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/courses/:id" element={<Course courses={courses} />} />
       </Routes>
     </ThemeProvider>
   );

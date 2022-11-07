@@ -6,11 +6,13 @@ export const color = {
     bg: '#F3F4F6',
     color: '#1F2937',
     primary: '#60A5FA',
+    darkPrimary: '#60a5fa',
   },
   dark: {
     color: '#F3F4F6',
     bg: '#1F2937',
     primary: '#60A5FA',
+    darkPrimary: '#60a5fa',
   },
 };
 
@@ -47,7 +49,7 @@ export const animation = {
   aboutMeDelay: '4.0s',
 };
 
-export async function getCourses() {
+export async function getCoursesFromDB() {
   const coursesCol = collection(db, 'courses');
   const courseSnapshot = await getDocs(coursesCol);
   const coursesList = courseSnapshot.docs.map((doc) => doc.data());
