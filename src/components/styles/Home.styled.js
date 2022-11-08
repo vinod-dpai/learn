@@ -4,7 +4,7 @@ import { animation, breakpoint, fontSize } from '../Helper';
 export const StyledHome = styled.div`
   color: ${({ theme }) => theme.color};
   height: 75vh;
-  padding: 0 5rem;
+  padding: 0 2rem;
 
   h1 {
     width: 100%;
@@ -25,7 +25,7 @@ export const StyledFilterIcon = styled.img`
 `;
 
 export const StyledSearchBox = styled.input`
-  height: 2rem;
+  height: 3rem;
   padding: 0.5rem;
   width: 85%;
   font-size: ${fontSize.md};

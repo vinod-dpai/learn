@@ -56,9 +56,18 @@ export async function getCoursesFromDB() {
   return coursesList;
 }
 
-export async function getCreds() {
-  const authCol = collection(db, 'auth');
-  const authSnapshot = await getDocs(authCol);
-  const authList = authSnapshot.docs.map((doc) => doc.data());
-  return authList;
+function getMultipleRandom(arr, num) {
+  const shuffled = [...arr].sort(() => 0.5 - Math.random());
+
+  return shuffled.slice(0, num);
+}
+
+export async function getQuestionsFromDB(id) {
+  const questionCol = collection(db, 'questions');
+  const questionSnapshot = await getDocs(questionCol);
+  const questionList = questionSnapshot.docs
+    .map((doc) => doc.data())
+    .filter((doc) => doc.courseId === Number.parseInt(id, 10));
+
+  return getMultipleRandom(questionList, 3);
 }

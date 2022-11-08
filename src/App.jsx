@@ -9,11 +9,13 @@ import NavDropDown from './components/NavDropDown';
 import About from './components/pages/About/About';
 // import AdminPage from './components/pages/AdminPage/AdminPage';
 import Course from './components/pages/Courses/Course';
+import Questions from './components/Questions/Questions';
 
 function App() {
   const [theme, setTheme] = useState('light');
   const [isOpen, setIsOpen] = useState(false);
   const [courses, setCourses] = useState([]);
+  // const [score, setScore] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +55,7 @@ function App() {
         <Route path="/learn" element={<Home courses={courses} />} />
         <Route path="/about" element={<About />} />
         <Route path="/courses/:id" element={<Course courses={courses} />} />
+        <Route path="/questions/:id" element={<Questions />} />
       </Routes>
     </ThemeProvider>
   );

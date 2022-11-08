@@ -5,8 +5,9 @@ export const StyledCourseContainer = styled.div`
   margin-top: 2rem;
   width: 100%;
   h1 {
+    width: 100%;
     text-align: left;
-    margin-left: 0.5rem;
+    margin-left: 0.75rem;
   }
 `;
 
@@ -52,7 +53,7 @@ export const StyledCourseContentContainer = styled.div`
 `;
 
 export const StyledCourseContent = styled.div`
-  width: 100%;
+  width: 23rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

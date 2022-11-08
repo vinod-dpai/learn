@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { StyledButton } from '../../styles/Courses/Course.styled';
 
 const Course = ({ courses }) => {
   const [embedId, setEmbedId] = useState('');
   const [courseName, setCourseName] = useState('');
   const { id } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     if (courses.length > 0) {
       const { name, url: videoUrl } = courses.find((course) => course.id === Number.parseInt(id, 10));
@@ -19,6 +21,10 @@ const Course = ({ courses }) => {
       }
     }
   }, [courses, id]);
+
+  const handleContinueToExam = () => {
+    navigate(`/questions/${id}`);
+  };
   return (
     <Container style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-2rem' }}>
       <h3 style={{ width: '75%', textAlign: 'left' }}>{courseName}</h3>
@@ -31,22 +37,9 @@ const Course = ({ courses }) => {
           title="Embedded Video"
         />
       </div>
-      <button
-        type="button"
-        style={{
-          marginTop: '0.5rem',
-          width: '75%',
-          padding: '0.25rem',
-          textAlign: 'left',
-          borderRadius: '0.25rem',
-          backgroundColor: '#60a5fa',
-          color: '#1F2937',
-          fontSize: '1.2rem',
-          fontWeight: 'bold',
-        }}
-      >
+      <StyledButton type="button" onClick={handleContinueToExam}>
         Continue To Examination
-      </button>
+      </StyledButton>
     </Container>
   );
   // return (
@@ -60,5 +53,5 @@ const Course = ({ courses }) => {
 export default Course;
 
 Course.propTypes = {
-  courses: PropTypes.string.isRequired,
+  courses: PropTypes.array.isRequired,
 };
