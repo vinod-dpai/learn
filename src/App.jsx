@@ -1,6 +1,6 @@
 import { ThemeProvider } from 'styled-components';
 import { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Redirect, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './components/pages/Home';
 import { color, getCoursesFromDB } from './components/Helper';
@@ -55,7 +55,8 @@ function App() {
         <Route path="/learn" element={<Home courses={courses} />} />
         <Route path="/about" element={<About />} />
         <Route path="/courses/:id" element={<Course courses={courses} />} />
-        <Route path="/questions/:id" element={<Questions />} />
+        <Route path="/questions/:id" element={<Questions courses={courses} />} />
+        <Route path="*" element={<Navigate to="/learn" replace />} />
       </Routes>
     </ThemeProvider>
   );

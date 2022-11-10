@@ -5,13 +5,13 @@ export const color = {
   light: {
     bg: '#F3F4F6',
     color: '#1F2937',
-    primary: '#60A5FA',
+    primary: '#b0d2fd',
     darkPrimary: '#60a5fa',
   },
   dark: {
     color: '#F3F4F6',
     bg: '#1F2937',
-    primary: '#60A5FA',
+    primary: '#b0d2fd',
     darkPrimary: '#60a5fa',
   },
 };
@@ -69,5 +69,5 @@ export async function getQuestionsFromDB(id) {
     .map((doc) => doc.data())
     .filter((doc) => doc.courseId === Number.parseInt(id, 10));
 
-  return getMultipleRandom(questionList, 3);
+  return getMultipleRandom(questionList, 10);
 }

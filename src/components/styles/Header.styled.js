@@ -44,7 +44,7 @@ export const StyledNavMain = styled.nav`
   }
 
   svg:hover {
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.darkPrimary};
   }
 `;
 export const StyledNav = styled.div`
@@ -62,7 +62,7 @@ export const StyledNav = styled.div`
     transition: color ease-in-out 300ms;
 
     &:hover {
-      color: ${({ theme }) => theme.primary};
+      color: ${({ theme }) => theme.darkPrimary};
     }
 
     &::before {
@@ -71,7 +71,7 @@ export const StyledNav = styled.div`
       width: 100%;
       height: 3px;
       top: 1.5rem;
-      background: ${({ theme }) => theme.primary};
+      background: ${({ theme }) => theme.darkPrimary};
       transform: scale(0, 1);
       transform-origin: left;
       transition: transform ease-in-out 300ms;
