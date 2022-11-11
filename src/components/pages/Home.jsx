@@ -20,8 +20,12 @@ const Home = ({ courses, isUserModalOpen, setIsUserModalOpen, setSelectedCourse 
 
     setFilteredCourses(() => courses.filter((course) => course.name.toLowerCase().includes(value.toLowerCase())));
   };
+
+  const handlePageClick = () => {
+    console.log('Clicked');
+  };
   return (
-    <StyledHome>
+    <StyledHome onClick={handlePageClick}>
       <h1>DLSA Alappuzha - Learning Portal</h1>
 
       <StyledSearchContainer>

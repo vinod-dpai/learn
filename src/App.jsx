@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './components/pages/Home';
@@ -20,6 +20,7 @@ function App() {
   const [selectedCourse, setSelectedCourse] = useState({});
   const [isUserModalOpen, setIsUserModalOpen] = useState(true);
   const [finalScore, setFinalScore] = useState(0);
+
   // const [score, setScore] = useState(0);
   const handleSetSelectedCourse = (course) => {
     setSelectedCourse(course);
@@ -87,18 +88,14 @@ function App() {
         <Route
           path="/courses"
           element={
-            <Course
-              course={selectedCourse}
-              isUserModalOpen={isUserModalOpen}
-              setIsUserModalOpen={handleSetIsUserModalOpen}
-            />
+            <Course courses={courses} isUserModalOpen={isUserModalOpen} setIsUserModalOpen={handleSetIsUserModalOpen} />
           }
         />
         <Route
           path="/questions"
           element={
             <Questions
-              course={selectedCourse}
+              courses={courses}
               isUserModalOpen={isUserModalOpen}
               setIsUserModalOpen={handleSetIsUserModalOpen}
               setFinalScore={handleSetFinalScore}

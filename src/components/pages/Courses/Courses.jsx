@@ -15,6 +15,7 @@ const Courses = ({ courses, setSelectedCourse }) => {
   const handleCourseOpen = (id) => {
     navigate('/courses');
     setSelectedCourse(courses.find((course) => course.id === Number.parseInt(id, 10)));
+    window.sessionStorage.setItem('cid', id);
   };
   return (
     <StyledCourseContainer>

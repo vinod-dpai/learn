@@ -1,22 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { StyledButton } from '../../styles/Courses/Course.styled';
 import UserModal from '../UserModal';
 
-const Course = ({ course, isUserModalOpen, setIsUserModalOpen }) => {
+const Course = ({ courses, isUserModalOpen, setIsUserModalOpen }) => {
   const [embedId, setEmbedId] = useState('');
   const [courseName, setCourseName] = useState('');
   const navigate = useNavigate();
+
+  const cid = window.sessionStorage.getItem('cid');
+  const selectedCourse = courses.find((course) => course.id === Number.parseInt(cid, 10));
+
   useEffect(() => {
-    const { name, url: videoUrl } = course;
-    setCourseName(name);
-    const urlAr = videoUrl?.split('/');
-    const videEmbedId = urlAr[urlAr.length - 1];
-    setEmbedId(videEmbedId);
-  }, [course]);
+    if (cid && courses.length > 0) {
+      const { name, url: videoUrl } = selectedCourse;
+      setCourseName(name);
+      const urlAr = videoUrl.split('/');
+      const videEmbedId = urlAr[urlAr.length - 1];
+      setEmbedId(videEmbedId);
+    }
+  }, [cid, courses, selectedCourse]);
+
+  useEffect(() => {
+    const isUserDetailsPresent = window.sessionStorage.getItem('userName');
+    if (!isUserDetailsPresent) setIsUserModalOpen(true);
+    else setIsUserModalOpen(false);
+  });
+
+  useEffect(() => {
+    if (!cid) navigate('/learn');
+  }, [cid, navigate]);
 
   const handleContinueToExam = () => {
     navigate('/questions');
@@ -50,7 +66,7 @@ const Course = ({ course, isUserModalOpen, setIsUserModalOpen }) => {
 export default Course;
 
 Course.propTypes = {
-  course: PropTypes.object.isRequired,
+  courses: PropTypes.array.isRequired,
   isUserModalOpen: PropTypes.bool.isRequired,
   setIsUserModalOpen: PropTypes.func.isRequired,
 };

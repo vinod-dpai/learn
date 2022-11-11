@@ -5,16 +5,18 @@ import { getQuestionsFromDB } from '../Helper';
 import { StyledQuestionsContainer } from '../styles/Questions/Questions.styled';
 import UserModal from '../pages/UserModal';
 
-const Questions = ({ isUserModalOpen, setIsUserModalOpen, setFinalScore, course }) => {
-  const { id } = course;
+const Questions = ({ courses, isUserModalOpen, setIsUserModalOpen, setFinalScore }) => {
+  const cid = window.sessionStorage.getItem('cid');
+  const selectedCourse = courses.find((course) => course.id === Number.parseInt(cid, 10));
   const [questions, setQuestions] = useState([]);
   const [areAllQuestionsAnswered, setAreAllQuestionsAnswered] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!cid) navigate('/learn');
     const fetchData = async () => {
-      const res = await getQuestionsFromDB(id);
+      const res = await getQuestionsFromDB(cid);
       setQuestions(
         res.map((question) => ({
           ...question,
@@ -25,7 +27,13 @@ const Questions = ({ isUserModalOpen, setIsUserModalOpen, setFinalScore, course 
     };
 
     fetchData();
-  }, [id]);
+  }, [cid, navigate]);
+
+  useEffect(() => {
+    const isUserDetailsPresent = window.sessionStorage.getItem('userName');
+    if (!isUserDetailsPresent) setIsUserModalOpen(true);
+    else setIsUserModalOpen(false);
+  });
 
   // useEffect(() => {
   //   setcourse(courses.find((course) => course.id === Number.parseInt(id, 10)));
@@ -76,9 +84,12 @@ const Questions = ({ isUserModalOpen, setIsUserModalOpen, setFinalScore, course 
     if (answeredQuestions.length === 10) setAreAllQuestionsAnswered(true);
   }, [questions]);
   return (
-    course && (
+    cid &&
+    courses.length > 0 && (
       <StyledQuestionsContainer>
-        <h2 style={{ width: '100%', textAlign: 'center', marginBottom: '1rem' }}>Examination for {course.name}</h2>
+        <h2 style={{ width: '100%', textAlign: 'center', marginBottom: '1rem' }}>
+          Examination for {selectedCourse.name}
+        </h2>
         <button type="button" onClick={handleBackClick}>
           Go Back To Video
         </button>
@@ -180,8 +191,8 @@ const Questions = ({ isUserModalOpen, setIsUserModalOpen, setFinalScore, course 
 export default Questions;
 
 Questions.propTypes = {
+  courses: PropTypes.array.isRequired,
   isUserModalOpen: PropTypes.bool.isRequired,
   setIsUserModalOpen: PropTypes.func.isRequired,
   setFinalScore: PropTypes.func.isRequired,
-  course: PropTypes.object.isRequired,
 };

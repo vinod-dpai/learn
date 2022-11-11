@@ -105,8 +105,18 @@ const UserModal = ({ isModalOpen, setIsModalOpen }) => {
     }
     if (isStudent) {
       window.sessionStorage.setItem('isStudent', isStudent);
-      window.sessionStorage.setItem('schoolOrCollege', schoolOrCollege);
-      window.sessionStorage.setItem('classOrCourse', classOrCourse);
+      if (schoolOrCollege !== '') {
+        window.sessionStorage.setItem('schoolOrCollege', schoolOrCollege);
+      } else {
+        setBlankItem('School/College');
+        return;
+      }
+      if (classOrCourse !== '') {
+        window.sessionStorage.setItem('classOrCourse', classOrCourse);
+      } else {
+        setBlankItem('Class/Course');
+        return;
+      }
     }
 
     if (
@@ -288,8 +298,9 @@ const UserModal = ({ isModalOpen, setIsModalOpen }) => {
                 type="text"
                 name="schoolOrCollege"
                 id="schoolOrCollege"
-                value={setSchoolOrCollege}
+                value={schoolOrCollege}
                 onChange={(e) => setSchoolOrCollege(e.target.value)}
+                style={{ marginLeft: '0.5rem', width: '18rem', padding: '0.25rem 0.5rem' }}
               />
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
