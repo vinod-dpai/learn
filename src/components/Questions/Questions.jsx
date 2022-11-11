@@ -1,40 +1,84 @@
 import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getQuestionsFromDB } from '../Helper';
 import { StyledQuestionsContainer } from '../styles/Questions/Questions.styled';
+import UserModal from '../pages/UserModal';
 
-const Questions = ({ courses }) => {
-  const { id } = useParams();
+const Questions = ({ isUserModalOpen, setIsUserModalOpen, setFinalScore, course }) => {
+  const { id } = course;
   const [questions, setQuestions] = useState([]);
-  const [selectedCourse, setSelectedCourse] = useState({});
+  const [areAllQuestionsAnswered, setAreAllQuestionsAnswered] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await getQuestionsFromDB(id);
-      setQuestions(res);
-      console.log(res);
+      setQuestions(
+        res.map((question) => ({
+          ...question,
+          answered: false,
+          selected: false,
+        }))
+      );
     };
 
     fetchData();
   }, [id]);
 
-  useEffect(() => {
-    setSelectedCourse(courses.find((course) => course.id === Number.parseInt(id, 10)));
-  }, [courses, id]);
+  // useEffect(() => {
+  //   setcourse(courses.find((course) => course.id === Number.parseInt(id, 10)));
+  // }, [courses, id]);
 
   const handleBackClick = () => {
-    navigate(`/courses/${id}`);
+    navigate('/courses');
   };
 
+  const handleAnswerClick = (questionId, selectedOption) => {
+    const updatedQuestions = questions.map((question) => {
+      const tempQuestion = { ...question };
+      if (tempQuestion.id === questionId) {
+        tempQuestion.answered = true;
+        tempQuestion.selected = selectedOption;
+      }
+
+      return tempQuestion;
+    });
+
+    setQuestions(updatedQuestions);
+  };
+
+  const calculateScore = () => {
+    const selectedAnswers = questions.map(({ answer, selected }) => ({
+      selected,
+      answer,
+    }));
+
+    let score = 0;
+
+    selectedAnswers.forEach(({ answer, selected }) => {
+      if (selected === answer) {
+        score += 10;
+      }
+    });
+
+    setFinalScore(score);
+    if (score >= 80) {
+      navigate('/passed');
+    } else {
+      navigate('/failed');
+    }
+  };
+
+  useEffect(() => {
+    const answeredQuestions = questions.filter((question) => question.answered);
+    if (answeredQuestions.length === 10) setAreAllQuestionsAnswered(true);
+  }, [questions]);
   return (
-    selectedCourse && (
+    course && (
       <StyledQuestionsContainer>
-        <h2 style={{ width: '100%', textAlign: 'center', marginBottom: '1rem' }}>
-          Examination for {selectedCourse.name}
-        </h2>
+        <h2 style={{ width: '100%', textAlign: 'center', marginBottom: '1rem' }}>Examination for {course.name}</h2>
         <button type="button" onClick={handleBackClick}>
           Go Back To Video
         </button>
@@ -48,6 +92,7 @@ const Questions = ({ courses }) => {
                     <input
                       type="radio"
                       name={question.id}
+                      onClick={() => handleAnswerClick(question.id, question.option1)}
                       id={`${question.id}_${question.option1}`}
                       style={{ display: 'none' }}
                     />
@@ -66,6 +111,7 @@ const Questions = ({ courses }) => {
                     <input
                       type="radio"
                       name={question.id}
+                      onClick={() => handleAnswerClick(question.id, question.option2)}
                       id={`${question.id}_${question.option2}`}
                       style={{ display: 'none' }}
                     />
@@ -84,6 +130,7 @@ const Questions = ({ courses }) => {
                     <input
                       type="radio"
                       name={question.id}
+                      onClick={() => handleAnswerClick(question.id, question.option3)}
                       id={`${question.id}_${question.option3}`}
                       style={{ display: 'none' }}
                     />
@@ -102,6 +149,7 @@ const Questions = ({ courses }) => {
                     <input
                       type="radio"
                       name={question.id}
+                      onClick={() => handleAnswerClick(question.id, question.option4)}
                       id={`${question.id}_${question.option4}`}
                       style={{ display: 'none' }}
                     />
@@ -120,7 +168,10 @@ const Questions = ({ courses }) => {
               </li>
             ))}
         </ol>
-        <button type="button">Submit</button>
+        <button disabled={!areAllQuestionsAnswered} type="button" onClick={calculateScore}>
+          Submit
+        </button>
+        <UserModal isModalOpen={isUserModalOpen} setIsModalOpen={setIsUserModalOpen} />
       </StyledQuestionsContainer>
     )
   );
@@ -129,5 +180,8 @@ const Questions = ({ courses }) => {
 export default Questions;
 
 Questions.propTypes = {
-  courses: PropTypes.array.isRequired,
+  isUserModalOpen: PropTypes.bool.isRequired,
+  setIsUserModalOpen: PropTypes.func.isRequired,
+  setFinalScore: PropTypes.func.isRequired,
+  course: PropTypes.object.isRequired,
 };

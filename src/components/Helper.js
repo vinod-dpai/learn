@@ -71,3 +71,168 @@ export async function getQuestionsFromDB(id) {
 
   return getMultipleRandom(questionList, 10);
 }
+
+export const districtAndTalukInfo = [
+  {
+    code: 'alappuzha',
+    name: 'Alappuzha',
+    taluks: [
+      { code: 'ambalappuzha', name: 'Ambalappuzha (Alappuzha)' },
+      { code: 'chengannur', name: 'Chengannur' },
+      { code: 'cherthala', name: 'Cherthala' },
+      { code: 'karthikappally', name: 'Karthikappally (Haripad)' },
+      { code: 'kuttanad', name: 'Kuttanad (Mankombu)' },
+      { code: 'mavelikkara', name: 'Mavelikkara' },
+    ],
+  },
+  {
+    code: 'ernakulam',
+    name: 'Ernakulam',
+    taluks: [
+      { code: 'aluva', name: 'Aluva' },
+      { code: 'kanayannur', name: 'Kanayannur (Ernakulam)' },
+      { code: 'kochi', name: 'Kochi (Fort Kochi)' },
+      { code: 'kothamangalam', name: 'Kothamangalam' },
+      { code: 'kunnathunad', name: 'Kunnathunad (Perumbavoor)' },
+      { code: 'muvattupuzha', name: 'Muvattupuzha' },
+      { code: 'northParavur', name: 'North Paravur' },
+    ],
+  },
+  {
+    code: 'idukki',
+    name: 'Idukki',
+    taluks: [
+      { code: 'devikulam', name: 'Devikulam' },
+      { code: 'peermade', name: 'Peermade' },
+      { code: 'udumbanchola', name: 'Udumbanchola (Nedumkandam)' },
+      { code: 'idukki', name: 'Idukki (Painavu)' },
+      { code: 'thodupuzha', name: 'Thodupuzha' },
+    ],
+  },
+  {
+    code: 'kannur',
+    name: 'Kannur',
+    taluks: [
+      { code: 'thalassery', name: 'Thalassery' },
+      { code: 'iritty', name: 'Iritty' },
+      { code: 'kannur', name: 'Kannur' },
+      { code: 'taliparamba', name: 'Taliparamba' },
+      { code: 'payyanur', name: 'Payyanur' },
+    ],
+  },
+  {
+    code: 'kasaragod',
+    name: 'Kasaragod',
+    taluks: [
+      { code: 'manjeshwaram', name: 'Manjeshwaram (Uppala)' },
+      { code: 'kasaragod', name: 'Kasaragod' },
+      { code: 'vellarikundu', name: 'Vellarikundu' },
+      { code: 'hosdurg', name: 'Hosdurg' },
+    ],
+  },
+  {
+    code: 'kollam',
+    name: 'Kollam',
+    taluks: [
+      { code: 'kollam', name: 'Kollam (Paravur, Chathannoor)' },
+      { code: 'karunagappally', name: 'Karunagappally' },
+      { code: 'kunnathur', name: 'Kunnathur (Sasthamkotta)' },
+      { code: 'kottarakara', name: 'Kottarakkara' },
+      { code: 'punalur', name: 'Punalur' },
+      { code: 'pathanapuram', name: 'Pathanapuram' },
+    ],
+  },
+  {
+    code: 'kottayam',
+    name: 'Kottayam',
+    taluks: [
+      { code: 'changanassery', name: 'Changanassery' },
+      { code: 'kanjirappally', name: 'Kanjirappally' },
+      { code: 'kottayam', name: 'Kottayam' },
+      { code: 'vaikom', name: 'Vaikom' },
+      { code: 'meenachil', name: 'Meenachil (Palai)' },
+    ],
+  },
+  {
+    code: 'kozhikode',
+    name: 'Kozhikode',
+    taluks: [
+      { code: 'kozhikode', name: 'Kozhikode' },
+      { code: 'thamarassery', name: 'Thamarassery' },
+      { code: 'koyilandy', name: 'Koyilandy' },
+      { code: 'vatakara', name: 'Vatakara' },
+    ],
+  },
+  {
+    code: 'malappuram',
+    name: 'Malappuram',
+    taluks: [
+      { code: 'nilambur', name: 'Nilambur' },
+      { code: 'manjeri', name: 'Manjeri (Eranad)' },
+      { code: 'kondotty', name: 'Kondotty' },
+      { code: 'perinthalmanna', name: 'Perinthalmanna' },
+      { code: 'ponnani', name: 'Ponnani' },
+      { code: 'tirur', name: 'Tirur' },
+      { code: 'tirurangadi', name: 'Tirurangadi' },
+    ],
+  },
+  {
+    code: 'palakkad',
+    name: 'Palakkad',
+    taluks: [
+      { code: 'alathur', name: 'Alathur' },
+      { code: 'chittur', name: 'Chittur' },
+      { code: 'palakkad', name: 'Palakkad' },
+      { code: 'pattambi', name: 'Pattambi' },
+      { code: 'ottappalam', name: 'Ottappalam' },
+      { code: 'mannarkkad', name: 'Mannarkkad' },
+      { code: 'attappady', name: 'Attappady (Agali)' },
+    ],
+  },
+  {
+    code: 'pathanamthitta',
+    name: 'Pathanamthitta',
+    taluks: [
+      { code: 'adoor', name: 'Adoor' },
+      { code: 'konni', name: 'Konni' },
+      { code: 'kozhencherry', name: 'Kozhencherry' },
+      { code: 'ranni', name: 'Ranni' },
+      { code: 'mallappally', name: 'Mallappally' },
+      { code: 'thiruvalla', name: 'Thiruvalla' },
+    ],
+  },
+  {
+    code: 'thiruvananthapuram',
+    name: 'Thiruvananthapuram',
+    taluks: [
+      { code: 'neyyattinkara', name: 'Neyyattinkara' },
+      { code: 'kattakada', name: 'Kattakada' },
+      { code: 'nedumangad', name: 'Nedumangad' },
+      { code: 'thiruvananthapuram', name: 'Thiruvananthapuram' },
+      { code: 'chirayinkeezhu', name: 'Chirayinkeezhu (Attingal)' },
+      { code: 'varkala', name: 'Varkala' },
+    ],
+  },
+  {
+    code: 'thrissur',
+    name: 'Thrissur',
+    taluks: [
+      { code: 'kodungallur', name: 'Kodungallur' },
+      { code: 'mukundapuram', name: 'Mukundapuram (Irinjalakuda)' },
+      { code: 'chalakudy', name: 'Chalakudy' },
+      { code: 'chavakkad', name: 'Chavakkad' },
+      { code: 'thalapilly', name: 'Thalapilly (Wadakkancheri)' },
+      { code: 'thrissur', name: 'Thrissur' },
+      { code: 'kunnamkulam', name: 'Kunnamkulam' },
+    ],
+  },
+  {
+    code: 'wayanad',
+    name: 'Wayanad',
+    taluks: [
+      { code: 'mananthavady', name: 'Mananthavady' },
+      { code: 'sultanBathery', name: 'Sultan Bathery' },
+      { code: 'vythiri', name: 'Vythiri (Kalpetta)' },
+    ],
+  },
+];

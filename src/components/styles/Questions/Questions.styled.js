@@ -26,5 +26,13 @@ export const StyledQuestionsContainer = styled.div`
     &:hover {
       background-color: ${({ theme }) => theme.primary};
     }
+
+    &:disabled {
+      background-color: ${({ theme }) => theme.bg};
+    }
+
+    &:disabled:hover {
+      background-color: ${({ theme }) => theme.bg};
+    }
   }
 `;

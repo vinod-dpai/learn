@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 import { StyledButton } from '../styles/UserModal.styled';
+import { districtAndTalukInfo } from '../Helper';
 
 const customStyles = {
   content: {
@@ -13,97 +16,31 @@ const customStyles = {
   },
 };
 
-const UserModal = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const [isStudent, setIsStudent] = useState(false);
+const UserModal = ({ isModalOpen, setIsModalOpen }) => {
+  const [taluks, setTaluks] = useState([]);
 
-  const districts = [
-    {
-      code: 'alappuzha',
-      name: 'Alappuzha',
-      taluks: [
-        { code: 'ambalappuzha', name: 'Ambalappuzha (Alappuzha)' },
-        { code: 'chengannur', name: 'Chengannur' },
-        { code: 'cherthala', name: 'Cherthala' },
-        { code: 'karthikappally', name: 'Karthikappally (Haripad)' },
-        { code: 'kuttanad', name: 'Kuttanad (Mankombu)' },
-        { code: 'mavelikkara', name: 'Mavelikkara' },
-      ],
-    },
-    {
-      code: 'ernakulam',
-      name: 'Ernakulam',
-      taluks: [
-        { code: 'aluva', name: 'Aluva' },
-        { code: 'kanayannur', name: 'Kanayannur (Ernakulam)' },
-        { code: 'kochi', name: 'Kochi (Fort Kochi)' },
-        { code: 'kothamangalam', name: 'Kothamangalam' },
-        { code: 'kunnathunad', name: 'Kunnathunad (Perumbavoor)' },
-        { code: 'muvattupuzha', name: 'Muvattupuzha' },
-        { code: 'northParavur', name: 'North Paravur' },
-      ],
-    },
-    {
-      code: 'idukki',
-      name: 'Idukki',
-      taluks: [
-        { code: 'devikulam', name: 'Devikulam' },
-        { code: 'peermade', name: 'Peermade' },
-        { code: 'udumbanchola', name: 'Udumbanchola (Nedumkandam)' },
-        { code: 'idukki', name: 'Idukki (Painavu)' },
-        { code: 'thodupuzha', name: 'Thodupuzha' },
-      ],
-    },
-    {
-      code: 'kannur',
-      name: 'Kannur',
-      taluks: [
-        { code: 'thalassery', name: 'Thalassery' },
-        { code: 'iritty', name: 'Iritty' },
-        { code: 'kannur', name: 'Kannur' },
-        { code: 'taliparamba', name: 'Taliparamba' },
-        { code: 'payyanur', name: 'Payyanur' },
-      ],
-    },
-    {
-      code: 'kasaragod',
-      name: 'Kasaragod',
-      taluks: [
-        { code: 'manjeshwaram', name: 'Manjeshwaram (Uppala)' },
-        { code: 'kasaragod', name: 'Kasaragod' },
-        { code: 'vellarikundu', name: 'Vellarikundu' },
-        { code: 'hosdurg', name: 'Hosdurg' },
-      ],
-    },
-    {
-      code: 'kollam',
-      name: 'Kollam',
-      taluks: [
-        { code: 'kollam', name: 'Kollam (Paravur, Chathannoor)' },
-        { code: 'karunagappally', name: 'Karunagappally' },
-        { code: 'kunnathur', name: 'Kunnathur (Sasthamkotta)' },
-        { code: 'kottarakara', name: 'Kottarakkara' },
-        { code: 'punalur', name: 'Punalur' },
-        { code: 'pathanapuram', name: 'Pathanapuram' },
-      ],
-    },
-    {
-      code: 'kottayam',
-      name: 'Kottayam',
-      taluks: [
-        { code: 'changanassery', name: 'Changanassery' },
-        { code: 'kanjirappally', name: 'Kanjirappally' },
-        { code: 'kottayam', name: 'Kottayam' },
-        { code: 'vaikom', name: 'Vaikom' },
-        { code: 'meenachil', name: 'Meenachil (Palai)' },
-      ],
-    },
-  ];
+  const navigate = useNavigate();
+
+  const [userName, setUserName] = useState('');
+  const [dob, setDOB] = useState('');
+  const [gender, setGender] = useState('');
+  const [email, setEmail] = useState('');
+  const [phno, setPhno] = useState('');
+  const [address, setAddress] = useState('');
+  const [district, setDistrict] = useState('');
+  const [taluk, setTaluk] = useState('');
+  const [religion, setReligion] = useState('');
+  const [isStudent, setIsStudent] = useState('');
+  const [schoolOrCollege, setSchoolOrCollege] = useState('');
+  const [classOrCourse, setClassOrCourse] = useState('');
+
+  const [blankItem, setBlankItem] = useState(null);
+
+  const allDistricts = districtAndTalukInfo.map(({ code, name }) => ({ code, name }));
 
   const checkIsStudent = (e) => {
     const { value } = e.target;
-
-    setIsStudent(value === 'yes');
+    if (value === 'yes') setIsStudent(true);
   };
 
   const closeModal = () => {
@@ -111,13 +48,87 @@ const UserModal = () => {
   };
 
   const handleSubmit = (e) => {
-    console.log('submit');
     e.preventDefault();
-    setIsModalOpen(false);
+    if (userName !== '') {
+      window.sessionStorage.setItem('userName', userName);
+    } else {
+      setBlankItem('Name');
+      return;
+    }
+    if (dob !== '') {
+      window.sessionStorage.setItem('dob', dob);
+    } else {
+      setBlankItem('Date Of Birth');
+      return;
+    }
+    if (gender !== '') {
+      window.sessionStorage.setItem('gender', gender);
+    } else {
+      setBlankItem('Gender');
+      return;
+    }
+    if (email !== '') {
+      window.sessionStorage.setItem('email', email);
+    } else {
+      setBlankItem('Email');
+      return;
+    }
+    if (phno !== '') {
+      window.sessionStorage.setItem('phno', phno);
+    } else {
+      setBlankItem('Phone Number');
+      return;
+    }
+    if (address !== '') {
+      window.sessionStorage.setItem('address', address);
+    } else {
+      setBlankItem('Address');
+      return;
+    }
+    if (district !== '') {
+      window.sessionStorage.setItem('district', district);
+    } else {
+      setBlankItem('District');
+      return;
+    }
+    if (taluk !== '') {
+      window.sessionStorage.setItem('taluk', taluk);
+    } else {
+      setBlankItem('Taluk');
+      return;
+    }
+    if (religion !== '') {
+      window.sessionStorage.setItem('religion', religion);
+    } else {
+      setBlankItem('Religion');
+      return;
+    }
+    if (isStudent) {
+      window.sessionStorage.setItem('isStudent', isStudent);
+      window.sessionStorage.setItem('schoolOrCollege', schoolOrCollege);
+      window.sessionStorage.setItem('classOrCourse', classOrCourse);
+    }
+
+    if (
+      userName !== '' &&
+      dob !== '' &&
+      gender !== '' &&
+      email !== '' &&
+      phno !== '' &&
+      address !== '' &&
+      district !== '' &&
+      taluk !== '' &&
+      religion !== ''
+    ) {
+      navigate('/learn');
+      setIsModalOpen(false);
+    }
   };
 
   const addTaluks = (e) => {
-    console.log(e.target.value);
+    setDistrict(e.target.value);
+    const { taluks: talukList } = districtAndTalukInfo.find(({ code }) => code === e.target.value);
+    setTaluks(talukList);
   };
   return (
     <Modal isOpen={isModalOpen} style={customStyles} contentLabel="User Modal">
@@ -131,6 +142,7 @@ const UserModal = () => {
           &times;
         </button>
       </div>
+
       <form
         onSubmit={handleSubmit}
         style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.5rem' }}
@@ -141,7 +153,9 @@ const UserModal = () => {
             type="text"
             name="name"
             id="name"
-            style={{ marginLeft: '0.5rem', width: '20rem', padding: '0.25rem 0.5rem' }}
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            style={{ marginLeft: '0.5rem', width: '18rem', padding: '0.25rem 0.5rem' }}
           />
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -150,12 +164,20 @@ const UserModal = () => {
             type="date"
             name="dob"
             id="dob"
-            style={{ marginLeft: '0.5rem', width: '20rem', padding: '0.25rem 0.5rem' }}
+            value={dob}
+            onChange={(e) => setDOB(e.target.value)}
+            style={{ marginLeft: '0.5rem', width: '18rem', padding: '0.25rem 0.5rem' }}
           />
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <label htmlFor="gender">Gender</label>
-          <select name="gender" id="gender" style={{ marginLeft: '0.5rem', width: '20rem', padding: '0.25rem 0.5rem' }}>
+          <select
+            name="gender"
+            id="gender"
+            value={gender}
+            style={{ marginLeft: '0.5rem', width: '18rem', padding: '0.25rem 0.5rem' }}
+            onChange={(e) => setGender(e.target.value)}
+          >
             <option value="">--SELECT--</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
@@ -168,7 +190,9 @@ const UserModal = () => {
             type="email"
             name="email"
             id="email"
-            style={{ marginLeft: '0.5rem', width: '20rem', padding: '0.25rem 0.5rem' }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ marginLeft: '0.5rem', width: '18rem', padding: '0.25rem 0.5rem' }}
           />
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -177,7 +201,9 @@ const UserModal = () => {
             type="tel"
             name="phno"
             id="phno"
-            style={{ marginLeft: '0.5rem', width: '20rem', padding: '0.25rem 0.5rem' }}
+            value={phno}
+            onChange={(e) => setPhno(e.target.value)}
+            style={{ marginLeft: '0.5rem', width: '18rem', padding: '0.25rem 0.5rem' }}
           />
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -185,9 +211,11 @@ const UserModal = () => {
           <textarea
             name="address"
             id="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             style={{
               marginLeft: '0.5rem',
-              width: '20rem',
+              width: '18rem',
 
               height: '6rem',
               padding: '0.25rem 0.5rem',
@@ -199,40 +227,34 @@ const UserModal = () => {
           <select
             name="district"
             id="district"
+            value={district}
             onChange={addTaluks}
-            style={{ marginLeft: '0.5rem', width: '20rem', padding: '0.25rem 0.5rem' }}
+            style={{ marginLeft: '0.5rem', width: '18rem', padding: '0.25rem 0.5rem' }}
           >
             <option value="">--SELECT--</option>
-            <option value="alappuzha">Alappuzha</option>
-            <option value="ernakulam">Ernakulam</option>
-            <option value="idukki">Idukki</option>
-            <option value="kannur">Kannur</option>
-            <option value="kasargod">Kasargod</option>
-            <option value="kollam">Kollam</option>
-            <option value="kottayam">Kottayam</option>
-            <option value="kozhikode">kozhikode</option>
-            <option value="malappuram">malappuram</option>
-            <option value="palakkad">palakkad</option>
-            <option value="pathanamthitta">Pathanamthitta</option>
-            <option value="thiruvananthapuram">Thiruvananthapuram</option>
-            <option value="thrissur">Thrissur</option>
-            <option value="Wayanad">Alappuzha</option>
+            {allDistricts.map(({ code, name }) => (
+              <option key={code} value={code}>
+                {name}
+              </option>
+            ))}
           </select>
-          {/* <input
-            type="text"
-            name="district"
-            id="district"
-            style={{ marginLeft: '0.5rem', width: '20rem',  padding: '0.25rem 0.5rem' }}
-          /> */}
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <label htmlFor="taluk">Taluk</label>
-          <input
-            type="text"
+          <select
             name="taluk"
             id="taluk"
-            style={{ marginLeft: '0.5rem', width: '20rem', padding: '0.25rem 0.5rem' }}
-          />
+            style={{ marginLeft: '0.5rem', width: '18rem', padding: '0.25rem 0.5rem' }}
+            value={taluk}
+            onChange={(e) => setTaluk(e.target.value)}
+          >
+            <option value="">--SELECT--</option>
+            {taluks.map(({ code, name }) => (
+              <option key={code} value={code}>
+                {name}
+              </option>
+            ))}
+          </select>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <label htmlFor="religion">Religion</label>
@@ -240,7 +262,9 @@ const UserModal = () => {
             type="text"
             name="religion"
             id="religion"
-            style={{ marginLeft: '0.5rem', width: '20rem', padding: '0.25rem 0.5rem' }}
+            value={religion}
+            onChange={(e) => setReligion(e.target.value)}
+            style={{ marginLeft: '0.5rem', width: '18rem', padding: '0.25rem 0.5rem' }}
           />
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -249,7 +273,7 @@ const UserModal = () => {
             name="student"
             id="student"
             onChange={(e) => checkIsStudent(e)}
-            style={{ marginLeft: '0.5rem', width: '20rem', padding: '0.25rem 0.5rem' }}
+            style={{ marginLeft: '0.5rem', width: '18rem', padding: '0.25rem 0.5rem' }}
           >
             <option value="">--SELECT--</option>
             <option value="yes">Yes</option>
@@ -264,7 +288,8 @@ const UserModal = () => {
                 type="text"
                 name="schoolOrCollege"
                 id="schoolOrCollege"
-                style={{ marginLeft: '0.5rem', width: '20rem', padding: '0.25rem 0.5rem' }}
+                value={setSchoolOrCollege}
+                onChange={(e) => setSchoolOrCollege(e.target.value)}
               />
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -273,11 +298,14 @@ const UserModal = () => {
                 type="text"
                 name="classOrCourse"
                 id="classOrCourse"
-                style={{ marginLeft: '0.5rem', width: '20rem', padding: '0.25rem 0.5rem' }}
+                value={classOrCourse}
+                onChange={(e) => setClassOrCourse(e.target.value)}
+                style={{ marginLeft: '0.5rem', width: '18rem', padding: '0.25rem 0.5rem' }}
               />
             </div>
           </>
         )}
+        {blankItem && <span style={{ color: 'red', fontWeight: 'bold' }}>{blankItem} cannot be blank!!</span>}
         <StyledButton type="submit">Continue</StyledButton>
       </form>
     </Modal>
@@ -285,3 +313,8 @@ const UserModal = () => {
 };
 
 export default UserModal;
+
+UserModal.propTypes = {
+  isModalOpen: PropTypes.bool.isRequired,
+  setIsModalOpen: PropTypes.func.isRequired,
+};

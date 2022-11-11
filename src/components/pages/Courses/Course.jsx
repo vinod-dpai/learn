@@ -4,26 +4,22 @@ import { PropTypes } from 'prop-types';
 import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { StyledButton } from '../../styles/Courses/Course.styled';
+import UserModal from '../UserModal';
 
-const Course = ({ courses }) => {
+const Course = ({ course, isUserModalOpen, setIsUserModalOpen }) => {
   const [embedId, setEmbedId] = useState('');
   const [courseName, setCourseName] = useState('');
-  const { id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    if (courses.length > 0) {
-      const { name, url: videoUrl } = courses.find((course) => course.id === Number.parseInt(id, 10));
-      if (videoUrl) {
-        setCourseName(name);
-        const urlAr = videoUrl?.split('/');
-        const videEmbedId = urlAr[urlAr.length - 1];
-        setEmbedId(videEmbedId);
-      }
-    }
-  }, [courses, id]);
+    const { name, url: videoUrl } = course;
+    setCourseName(name);
+    const urlAr = videoUrl?.split('/');
+    const videEmbedId = urlAr[urlAr.length - 1];
+    setEmbedId(videEmbedId);
+  }, [course]);
 
   const handleContinueToExam = () => {
-    navigate(`/questions/${id}`);
+    navigate('/questions');
   };
   return (
     <Container style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-2rem' }}>
@@ -40,6 +36,7 @@ const Course = ({ courses }) => {
       <StyledButton type="button" onClick={handleContinueToExam}>
         Continue To Examination
       </StyledButton>
+      <UserModal isModalOpen={isUserModalOpen} setIsModalOpen={setIsUserModalOpen} />
     </Container>
   );
   // return (
@@ -53,5 +50,7 @@ const Course = ({ courses }) => {
 export default Course;
 
 Course.propTypes = {
-  courses: PropTypes.array.isRequired,
+  course: PropTypes.object.isRequired,
+  isUserModalOpen: PropTypes.bool.isRequired,
+  setIsUserModalOpen: PropTypes.func.isRequired,
 };

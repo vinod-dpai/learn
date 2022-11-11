@@ -5,7 +5,7 @@ import Courses from './Courses/Courses';
 import FilterIcon from '../../icons/filter.webp';
 import UserModal from './UserModal';
 
-const Home = ({ courses }) => {
+const Home = ({ courses, isUserModalOpen, setIsUserModalOpen, setSelectedCourse }) => {
   const [filteredCourses, setFilteredCourses] = useState(courses);
   const [searchText, setSearchText] = useState('');
 
@@ -28,8 +28,8 @@ const Home = ({ courses }) => {
         <StyledSearchBox placeholder="Type Something To Search..." value={searchText} onChange={handleSearch} />
         <StyledFilterIcon src={FilterIcon} alt="Filter" />
       </StyledSearchContainer>
-      <Courses courses={filteredCourses} />
-      <UserModal />
+      <Courses courses={filteredCourses} setSelectedCourse={setSelectedCourse} />
+      <UserModal isModalOpen={isUserModalOpen} setIsModalOpen={setIsUserModalOpen} />
     </StyledHome>
   );
 };
@@ -38,4 +38,7 @@ export default Home;
 
 Home.propTypes = {
   courses: PropTypes.array.isRequired,
+  isUserModalOpen: PropTypes.bool.isRequired,
+  setIsUserModalOpen: PropTypes.func.isRequired,
+  setSelectedCourse: PropTypes.func.isRequired,
 };

@@ -9,10 +9,12 @@ import {
   StyledCourseCategory,
 } from '../../styles/Courses/Courses.styled';
 
-const Courses = ({ courses }) => {
+const Courses = ({ courses, setSelectedCourse }) => {
   const navigate = useNavigate();
+
   const handleCourseOpen = (id) => {
-    navigate(`/courses/${id}`);
+    navigate('/courses');
+    setSelectedCourse(courses.find((course) => course.id === Number.parseInt(id, 10)));
   };
   return (
     <StyledCourseContainer>
@@ -36,4 +38,5 @@ export default Courses;
 
 Courses.propTypes = {
   courses: PropTypes.array.isRequired,
+  setSelectedCourse: PropTypes.func.isRequired,
 };

@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 // import bcrypt from 'bcryptjs';
 import { PropTypes } from 'prop-types';
-import { getCreds } from '../../Helper';
+// import { getCreds } from '../../Helper';
 
 // SALT should be created ONE TIME upon sign up
 // const salt = bcrypt.genSaltSync(10);
@@ -13,11 +13,11 @@ function AuthPage({ isLoggedIn, setIsLoggedIn }) {
 
   const [creds, setCreds] = useState([]);
   useEffect(() => {
-    async function auth() {
-      const dbCreds = await getCreds();
-      setCreds(dbCreds);
-    }
-    auth();
+    // async function auth() {
+    //   const dbCreds = await getCreds();
+    //   setCreds(dbCreds);
+    // }
+    // auth();
   }, []);
 
   function handleLoginForm() {
