@@ -51,7 +51,7 @@ export const StyledNav = styled.div`
   padding-right: 2rem;
   display: none;
 
-  a {
+  a, button {
     width: max-content;
     margin: 1rem;
     text-transform: uppercase;

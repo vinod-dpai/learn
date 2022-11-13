@@ -4,15 +4,19 @@ import { PropTypes } from 'prop-types';
 import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { StyledButton } from '../../styles/Courses/Course.styled';
-import UserModal from '../UserModal';
 
-const Course = ({ courses, isUserModalOpen, setIsUserModalOpen }) => {
+const Course = ({ courses, setAreUserDetailsPresent }) => {
   const [embedId, setEmbedId] = useState('');
   const [courseName, setCourseName] = useState('');
   const navigate = useNavigate();
 
   const cid = window.sessionStorage.getItem('cid');
   const selectedCourse = courses.find((course) => course.id === Number.parseInt(cid, 10));
+
+  useEffect(() => {
+    const userName = window.sessionStorage.getItem('userName');
+    setAreUserDetailsPresent(!!userName);
+  });
 
   useEffect(() => {
     if (cid && courses.length > 0) {
@@ -23,12 +27,6 @@ const Course = ({ courses, isUserModalOpen, setIsUserModalOpen }) => {
       setEmbedId(videEmbedId);
     }
   }, [cid, courses, selectedCourse]);
-
-  useEffect(() => {
-    const isUserDetailsPresent = window.sessionStorage.getItem('userName');
-    if (!isUserDetailsPresent) setIsUserModalOpen(true);
-    else setIsUserModalOpen(false);
-  });
 
   useEffect(() => {
     if (!cid) navigate('/learn');
@@ -52,7 +50,6 @@ const Course = ({ courses, isUserModalOpen, setIsUserModalOpen }) => {
       <StyledButton type="button" onClick={handleContinueToExam}>
         Continue To Examination
       </StyledButton>
-      <UserModal isModalOpen={isUserModalOpen} setIsModalOpen={setIsUserModalOpen} />
     </Container>
   );
   // return (
@@ -67,6 +64,5 @@ export default Course;
 
 Course.propTypes = {
   courses: PropTypes.array.isRequired,
-  isUserModalOpen: PropTypes.bool.isRequired,
-  setIsUserModalOpen: PropTypes.func.isRequired,
+  setAreUserDetailsPresent: PropTypes.func.isRequired,
 };

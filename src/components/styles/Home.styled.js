@@ -19,9 +19,12 @@ export const StyledSearchContainer = styled.div`
   align-items: center;
 `;
 
-export const StyledFilterIcon = styled.img`
-  width: 3rem;
+export const StyledSelect = styled.select`
   height: 3rem;
+  padding: 0.5rem;
+  font-size: ${fontSize.md};
+  border-radius: 0.5rem;
+  border: 2px solid ${({ theme }) => theme.color};
 `;
 
 export const StyledSearchBox = styled.input`

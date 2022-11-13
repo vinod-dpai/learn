@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import { StyledButton } from '../styles/UserModal.styled';
+import { StyledButton } from '../styles/UserDetails.styled';
 import { districtAndTalukInfo } from '../Helper';
 
 const customStyles = {
@@ -16,7 +15,7 @@ const customStyles = {
   },
 };
 
-const UserModal = ({ isModalOpen, setIsModalOpen }) => {
+const UserDetails = ({ setAreUserDetailsPresent }) => {
   const [taluks, setTaluks] = useState([]);
 
   const navigate = useNavigate();
@@ -30,7 +29,7 @@ const UserModal = ({ isModalOpen, setIsModalOpen }) => {
   const [district, setDistrict] = useState('');
   const [taluk, setTaluk] = useState('');
   const [religion, setReligion] = useState('');
-  const [isStudent, setIsStudent] = useState('');
+  const [isStudent, setIsStudent] = useState(false);
   const [schoolOrCollege, setSchoolOrCollege] = useState('');
   const [classOrCourse, setClassOrCourse] = useState('');
 
@@ -41,10 +40,6 @@ const UserModal = ({ isModalOpen, setIsModalOpen }) => {
   const checkIsStudent = (e) => {
     const { value } = e.target;
     if (value === 'yes') setIsStudent(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
   };
 
   const handleSubmit = (e) => {
@@ -74,7 +69,7 @@ const UserModal = ({ isModalOpen, setIsModalOpen }) => {
       return;
     }
     if (phno !== '') {
-      window.sessionStorage.setItem('phno', phno);
+      window.sessionStorage.setItem('phno', Number.parseInt(phno, 10));
     } else {
       setBlankItem('Phone Number');
       return;
@@ -104,7 +99,7 @@ const UserModal = ({ isModalOpen, setIsModalOpen }) => {
       return;
     }
     if (isStudent) {
-      window.sessionStorage.setItem('isStudent', isStudent);
+      window.sessionStorage.setItem('isStudent', true);
       if (schoolOrCollege !== '') {
         window.sessionStorage.setItem('schoolOrCollege', schoolOrCollege);
       } else {
@@ -117,6 +112,8 @@ const UserModal = ({ isModalOpen, setIsModalOpen }) => {
         setBlankItem('Class/Course');
         return;
       }
+    } else {
+      window.sessionStorage.setItem('isStudent', false);
     }
 
     if (
@@ -130,8 +127,8 @@ const UserModal = ({ isModalOpen, setIsModalOpen }) => {
       taluk !== '' &&
       religion !== ''
     ) {
+      setAreUserDetailsPresent(true);
       navigate('/learn');
-      setIsModalOpen(false);
     }
   };
 
@@ -141,22 +138,12 @@ const UserModal = ({ isModalOpen, setIsModalOpen }) => {
     setTaluks(talukList);
   };
   return (
-    <Modal isOpen={isModalOpen} style={customStyles} contentLabel="User Modal">
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <h2 style={{ padding: 0, marginTop: '-1rem' }}>User Details</h2>
-        <button
-          type="button"
-          onClick={closeModal}
-          style={{ border: 'none', backgroundColor: 'inherit', fontSize: '3rem', marginTop: '-2rem' }}
-        >
-          &times;
-        </button>
-      </div>
-
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.5rem' }}
-      >
+    <form
+      onSubmit={handleSubmit}
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+    >
+      <h2>User Details</h2>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <label htmlFor="name">Name</label>
           <input
@@ -268,14 +255,19 @@ const UserModal = ({ isModalOpen, setIsModalOpen }) => {
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <label htmlFor="religion">Religion</label>
-          <input
-            type="text"
+          <select
             name="religion"
             id="religion"
             value={religion}
             onChange={(e) => setReligion(e.target.value)}
             style={{ marginLeft: '0.5rem', width: '18rem', padding: '0.25rem 0.5rem' }}
-          />
+          >
+            <option value="">--SELECT--</option>
+            <option value="christian">Christian</option>
+            <option value="hindu">Hindu</option>
+            <option value="muslim">Muslim</option>
+            <option value="other">Other</option>
+          </select>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <label htmlFor="student">Student</label>
@@ -318,14 +310,13 @@ const UserModal = ({ isModalOpen, setIsModalOpen }) => {
         )}
         {blankItem && <span style={{ color: 'red', fontWeight: 'bold' }}>{blankItem} cannot be blank!!</span>}
         <StyledButton type="submit">Continue</StyledButton>
-      </form>
-    </Modal>
+      </div>
+    </form>
   );
 };
 
-export default UserModal;
+export default UserDetails;
 
-UserModal.propTypes = {
-  isModalOpen: PropTypes.bool.isRequired,
-  setIsModalOpen: PropTypes.func.isRequired,
-};
+UserDetails.propTypes = {
+  setAreUserDetailsPresent: PropTypes.func.isRequired,
+}

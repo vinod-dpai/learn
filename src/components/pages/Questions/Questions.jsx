@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { getQuestionsFromDB } from '../Helper';
-import { StyledQuestionsContainer } from '../styles/Questions/Questions.styled';
-import UserModal from '../pages/UserModal';
+import { addUserDetails, getQuestionsFromDB } from '../../Helper';
+import { StyledQuestionsContainer } from '../../styles/Questions/Questions.styled';
 
-const Questions = ({ courses, isUserModalOpen, setIsUserModalOpen, setFinalScore }) => {
+const Questions = ({ courses, setAreUserDetailsPresent, setCertificateInfo }) => { // , setFinalScore }) => {
   const cid = window.sessionStorage.getItem('cid');
   const selectedCourse = courses.find((course) => course.id === Number.parseInt(cid, 10));
   const [questions, setQuestions] = useState([]);
@@ -30,9 +29,8 @@ const Questions = ({ courses, isUserModalOpen, setIsUserModalOpen, setFinalScore
   }, [cid, navigate]);
 
   useEffect(() => {
-    const isUserDetailsPresent = window.sessionStorage.getItem('userName');
-    if (!isUserDetailsPresent) setIsUserModalOpen(true);
-    else setIsUserModalOpen(false);
+    const userName = window.sessionStorage.getItem('userName');
+    setAreUserDetailsPresent(!!userName);
   });
 
   // useEffect(() => {
@@ -71,8 +69,51 @@ const Questions = ({ courses, isUserModalOpen, setIsUserModalOpen, setFinalScore
       }
     });
 
-    setFinalScore(score);
+    
+    // setFinalScore(score);
     if (score >= 80) {
+      const dateOfCompletion = new Date();
+
+      const phno = Number.parseInt(window.sessionStorage.getItem('phno'));
+
+      let religion = window.sessionStorage.getItem('religion');
+      religion = religion.replace(/([A-Z])/g, " $1");
+      religion = religion.charAt(0).toUpperCase() + religion.slice(1);
+
+      let gender = window.sessionStorage.getItem('gender');
+      gender = gender.replace(/([A-Z])/g, " $1");
+      gender = gender.charAt(0).toUpperCase() + gender.slice(1);
+
+      let district = window.sessionStorage.getItem('district');
+      district = district.replace(/([A-Z])/g, " $1");
+      district = district.charAt(0).toUpperCase() + district.slice(1);
+
+      let taluk = window.sessionStorage.getItem('taluk');
+      taluk = taluk.replace(/([A-Z])/g, " $1");
+      taluk = taluk.charAt(0).toUpperCase() + taluk.slice(1);
+
+      const user = {
+        address: window.sessionStorage.getItem('address'),
+        classOrCourse: window.sessionStorage.getItem('classOrCourse') || '',
+        courseId: selectedCourse.id,
+        dateOfCompletion: dateOfCompletion.toString(),
+        district,
+        email: window.sessionStorage.getItem('email'),
+        id: `${dateOfCompletion.valueOf() + dateOfCompletion.getMilliseconds()}C${selectedCourse.id}`,
+        isStudent: window.sessionStorage.getItem('isStudent'),
+        name: window.sessionStorage.getItem('userName'),
+        gender,
+        dob: window.sessionStorage.getItem('dob'),
+        phno,
+        religion,
+        schoolOrCollege: window.sessionStorage.getItem('schoolOrCollege') || '',
+        score,
+        taluk,
+      }
+
+      setCertificateInfo({id: user.id, userName: user.name, dateOfCompletion});
+
+      addUserDetails(user);
       navigate('/passed');
     } else {
       navigate('/failed');
@@ -182,7 +223,6 @@ const Questions = ({ courses, isUserModalOpen, setIsUserModalOpen, setFinalScore
         <button disabled={!areAllQuestionsAnswered} type="button" onClick={calculateScore}>
           Submit
         </button>
-        <UserModal isModalOpen={isUserModalOpen} setIsModalOpen={setIsUserModalOpen} />
       </StyledQuestionsContainer>
     )
   );
@@ -192,7 +232,7 @@ export default Questions;
 
 Questions.propTypes = {
   courses: PropTypes.array.isRequired,
-  isUserModalOpen: PropTypes.bool.isRequired,
-  setIsUserModalOpen: PropTypes.func.isRequired,
-  setFinalScore: PropTypes.func.isRequired,
+  setAreUserDetailsPresent: PropTypes.func.isRequired,
+  setCertificateInfo: PropTypes.func.isRequired,
+  // setFinalScore: PropTypes.func.isRequired,
 };

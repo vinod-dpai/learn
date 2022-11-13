@@ -1,39 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { StyledHome, StyledSearchContainer, StyledSearchBox, StyledFilterIcon } from '../styles/Home.styled';
+import { StyledHome, StyledSelect, StyledSearchContainer, StyledSearchBox, StyledFilterIcon } from '../styles/Home.styled';
 import Courses from './Courses/Courses';
-import FilterIcon from '../../icons/filter.webp';
-import UserModal from './UserModal';
 
-const Home = ({ courses, isUserModalOpen, setIsUserModalOpen, setSelectedCourse }) => {
+const Home = ({ courses, setSelectedCourse, setAreUserDetailsPresent }) => {
   const [filteredCourses, setFilteredCourses] = useState(courses);
   const [searchText, setSearchText] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [searchCategory, setSearchedCategory] = useState('All');
 
   useEffect(() => {
+    const allCategories = courses.map((course) => course.category);
     setFilteredCourses(courses);
+    setCategories(
+      allCategories
+        .filter((item, index) => allCategories.indexOf(item) === index)
+    );
   }, [courses]);
 
-  const handleSearch = (e) => {
-    const { value } = e.target;
+  useEffect(() => {
+    const courseIdsFilteredByText = courses
+      .filter((course) => course.name.toLowerCase().includes(searchText.toLowerCase()))
+      .map((course) => course.id);
+    let courseIdsFilteredByCategory = [];
+    if (searchCategory !== 'All') {
+      courseIdsFilteredByCategory = courses.filter((course) => course.category === searchCategory);
+    }
+    else {
+      courseIdsFilteredByCategory = courses;
+    };
 
-    setSearchText(value);
+    courseIdsFilteredByCategory = courseIdsFilteredByCategory.map((course) => course.id);
 
-    setFilteredCourses(() => courses.filter((course) => course.name.toLowerCase().includes(value.toLowerCase())));
-  };
+    const updatedCourseIdsFilter = courseIdsFilteredByText.filter((item) => courseIdsFilteredByCategory.includes(item));
+
+    setFilteredCourses(courses.filter((course) => updatedCourseIdsFilter.includes(course.id)));
+  }, [searchText, searchCategory])
 
   const handlePageClick = () => {
-    console.log('Clicked');
+    const userName = window.sessionStorage.getItem('userName');
+    setAreUserDetailsPresent(!!userName);
   };
   return (
     <StyledHome onClick={handlePageClick}>
       <h1>DLSA Alappuzha - Learning Portal</h1>
 
       <StyledSearchContainer>
-        <StyledSearchBox placeholder="Type Something To Search..." value={searchText} onChange={handleSearch} />
-        <StyledFilterIcon src={FilterIcon} alt="Filter" />
+        <StyledSelect value={searchCategory} onChange={(e) => setSearchedCategory(e.target.value)}>
+          <option value="All">All</option>
+          {
+            categories.map((category) => (
+              <option key={category}>{category}</option>
+            ))
+          }
+        </StyledSelect>
+        <StyledSearchBox placeholder="Type Something To Search..." value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+        {/* <StyledFilterIcon src={FilterIcon} alt="Filter" /> */}
       </StyledSearchContainer>
       <Courses courses={filteredCourses} setSelectedCourse={setSelectedCourse} />
-      <UserModal isModalOpen={isUserModalOpen} setIsModalOpen={setIsUserModalOpen} />
     </StyledHome>
   );
 };
@@ -42,7 +66,6 @@ export default Home;
 
 Home.propTypes = {
   courses: PropTypes.array.isRequired,
-  isUserModalOpen: PropTypes.bool.isRequired,
-  setIsUserModalOpen: PropTypes.func.isRequired,
   setSelectedCourse: PropTypes.func.isRequired,
+  setAreUserDetailsPresent: PropTypes.func.isRequired,
 };

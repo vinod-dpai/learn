@@ -1,4 +1,4 @@
-import { collection, getDocs } from 'firebase/firestore/lite';
+import { collection, getDocs, addDoc } from 'firebase/firestore/lite';
 import db from '../firebase.config';
 
 export const color = {
@@ -54,6 +54,12 @@ export async function getCoursesFromDB() {
   const courseSnapshot = await getDocs(coursesCol);
   const coursesList = courseSnapshot.docs.map((doc) => doc.data());
   return coursesList;
+}
+
+export async function addUserDetails(user) {
+  const usersCol = collection(db, 'users');
+  const userSnapshot = await addDoc(usersCol, user);
+  console.log(userSnapshot);
 }
 
 function getMultipleRandom(arr, num) {

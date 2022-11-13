@@ -9,30 +9,37 @@ import NavDropDown from './components/NavDropDown';
 import About from './components/pages/About/About';
 // import AdminPage from './components/pages/AdminPage/AdminPage';
 import Course from './components/pages/Courses/Course';
-import Questions from './components/Questions/Questions';
-import Passed from './components/Questions/Passed';
-import Failed from './components/Questions/Failed';
+import Questions from './components/pages/Questions/Questions';
+import Passed from './components/pages/Questions/Passed';
+import Failed from './components/pages/Questions/Failed';
+import UserDetails from './components/pages/UserDetails';
 
 function App() {
   const [theme, setTheme] = useState('light');
   const [isOpen, setIsOpen] = useState(false);
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState({});
-  const [isUserModalOpen, setIsUserModalOpen] = useState(true);
-  const [finalScore, setFinalScore] = useState(0);
+  const [areUserDetailsPresent, setAreUserDetailsPresent] = useState(true);
+  const [certificateInfo, setCertificateInfo] = useState({});
+  // const [finalScore, setFinalScore] = useState(0);
 
   // const [score, setScore] = useState(0);
+
+  const handleSetCertificateInfo = (certificate) => {
+    console.log(certificate);
+    setCertificateInfo(certificate);
+  }
   const handleSetSelectedCourse = (course) => {
     setSelectedCourse(course);
   };
 
-  const handleSetFinalScore = (score) => {
-    setFinalScore(score);
-  };
+  const handleSetAreUserDetailsPresent = (value) => {
+    setAreUserDetailsPresent(value);
+  }
 
-  const handleSetIsUserModalOpen = (status) => {
-    setIsUserModalOpen(status);
-  };
+  // const handleSetFinalScore = (score) => {
+  //   setFinalScore(score);
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,9 +49,8 @@ function App() {
 
     fetchData();
 
-    const isUserDetailsPresent = window.sessionStorage.getItem('userName');
-    if (!isUserDetailsPresent) setIsUserModalOpen(true);
-    else setIsUserModalOpen(false);
+    // const userName = window.sessionStorage.getItem('userName');
+    // setAreUserDetailsPresent(!!userName);
   }, []);
 
   const navToggle = () => {
@@ -68,45 +74,52 @@ function App() {
     else setTheme('dark');
   };
   return (
-    <ThemeProvider theme={color[theme]}>
-      <GlobalStyles />
-      <Header isOpen={isOpen} navToggle={navToggle} theme={theme} toggleTheme={toggleTheme} />
-      <NavDropDown isOpen={isOpen} navToggle={navToggle} />
-      <Routes>
-        <Route
-          path="/learn"
-          element={
-            <Home
-              courses={courses}
-              isUserModalOpen={isUserModalOpen}
-              setIsUserModalOpen={handleSetIsUserModalOpen}
-              setSelectedCourse={handleSetSelectedCourse}
+    <>
+      {areUserDetailsPresent &&
+        <ThemeProvider theme={color[theme]}>
+          <GlobalStyles />
+          <Header isOpen={isOpen} navToggle={navToggle} theme={theme} toggleTheme={toggleTheme} />
+          <NavDropDown isOpen={isOpen} navToggle={navToggle} />
+          <Routes>
+            <Route
+              path="/learn"
+              element={
+                <Home
+                  courses={courses}
+                  setSelectedCourse={handleSetSelectedCourse}
+                  setAreUserDetailsPresent={handleSetAreUserDetailsPresent}
+                />
+              }
             />
-          }
-        />
-        <Route path="/about" element={<About />} />
-        <Route
-          path="/courses"
-          element={
-            <Course courses={courses} isUserModalOpen={isUserModalOpen} setIsUserModalOpen={handleSetIsUserModalOpen} />
-          }
-        />
-        <Route
-          path="/questions"
-          element={
-            <Questions
-              courses={courses}
-              isUserModalOpen={isUserModalOpen}
-              setIsUserModalOpen={handleSetIsUserModalOpen}
-              setFinalScore={handleSetFinalScore}
+            <Route path="/about" element={<About />} />
+            <Route
+              path="/courses"
+              element={
+                <Course
+                  courses={courses}
+                  setAreUserDetailsPresent={handleSetAreUserDetailsPresent}
+                />
+              }
             />
-          }
-        />
-        <Route path="/passed" element={<Passed />} />
-        <Route path="/failed" element={<Failed />} />
-        <Route path="*" element={<Navigate to="/learn" replace />} />
-      </Routes>
-    </ThemeProvider>
+            <Route
+              path="/questions"
+              element={
+                <Questions
+                  courses={courses}
+                  setAreUserDetailsPresent={handleSetAreUserDetailsPresent}
+                  setCertificateInfo={handleSetCertificateInfo}
+                // setFinalScore={handleSetFinalScore}
+                />
+              }
+            />
+            <Route path="/passed" element={<Passed course={selectedCourse} certificate={certificateInfo} /> } />
+            <Route path="/failed" element={<Failed course={selectedCourse} />} />
+            <Route path="*" element={<Navigate to="/learn" replace />} />
+          </Routes>
+        </ThemeProvider>
+      }
+      {!areUserDetailsPresent && <UserDetails setAreUserDetailsPresent={handleSetAreUserDetailsPresent}/>}
+    </>
   );
 }
 

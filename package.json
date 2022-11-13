@@ -4,9 +4,10 @@
   "private": true,
   "homepage": "https://vinod-dpai.github.io/learn/",
   "dependencies": {
-    "@react-pdf/renderer": "^3.0.1",
     "bootstrap": "^5.2.2",
     "firebase": "^9.13.0",
+    "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.9.0",
     "prop-types": "^15.8.1",
     "react": "^16.14.0",
     "react-bootstrap": "^2.6.0",
