@@ -19,9 +19,9 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState({});
-  const [areUserDetailsPresent, setAreUserDetailsPresent] = useState(true);
+  const [areUserDetailsPresent, setAreUserDetailsPresent] = useState(false);
   const [certificateInfo, setCertificateInfo] = useState({});
-  // const [finalScore, setFinalScore] = useState(0);
+  const [finalScore, setFinalScore] = useState(0);
 
   // const [score, setScore] = useState(0);
 
@@ -37,9 +37,9 @@ function App() {
     setAreUserDetailsPresent(value);
   }
 
-  // const handleSetFinalScore = (score) => {
-  //   setFinalScore(score);
-  // };
+  const handleSetFinalScore = (score) => {
+    setFinalScore(score);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,6 +49,7 @@ function App() {
 
     fetchData();
 
+    if (window.sessionStorage.getItem('userName')) setAreUserDetailsPresent(true);
     // const userName = window.sessionStorage.getItem('userName');
     // setAreUserDetailsPresent(!!userName);
   }, []);
@@ -74,53 +75,46 @@ function App() {
     else setTheme('dark');
   };
   return (
-    <>
-      {areUserDetailsPresent &&
-        <ThemeProvider theme={color[theme]}>
-          <GlobalStyles />
-          <Header isOpen={isOpen} navToggle={navToggle} theme={theme} toggleTheme={toggleTheme} />
-          <NavDropDown isOpen={isOpen} navToggle={navToggle} />
-          <Routes>
-            <Route
-              path="/learn"
-              element={
-                <Home
-                  courses={courses}
-                  setSelectedCourse={handleSetSelectedCourse}
-                  setAreUserDetailsPresent={handleSetAreUserDetailsPresent}
-                />
-              }
+    <ThemeProvider theme={color[theme]}>
+      <GlobalStyles />
+      <Header isOpen={isOpen} navToggle={navToggle} theme={theme} toggleTheme={toggleTheme} areUserDetailsPresent={areUserDetailsPresent} setAreUserDetailsPresent={handleSetAreUserDetailsPresent} />
+      <NavDropDown isOpen={isOpen} navToggle={navToggle} areUserDetailsPresent={areUserDetailsPresent} setAreUserDetailsPresent={handleSetAreUserDetailsPresent} />
+      <Routes>
+        <Route
+          path="/learn"
+          element={
+            <Home
+              courses={courses}
+              setSelectedCourse={handleSetSelectedCourse}
             />
-            <Route path="/about" element={<About />} />
-            <Route
-              path="/courses"
-              element={
-                <Course
-                  courses={courses}
-                  setAreUserDetailsPresent={handleSetAreUserDetailsPresent}
-                />
-              }
+          }
+        />
+        <Route path="/about" element={<About />} />
+        <Route
+          path="/courses"
+          element={
+            <Course
+              courses={courses}
             />
-            <Route
-              path="/questions"
-              element={
-                <Questions
-                  courses={courses}
-                  setAreUserDetailsPresent={handleSetAreUserDetailsPresent}
-                  setCertificateInfo={handleSetCertificateInfo}
-                // setFinalScore={handleSetFinalScore}
-                />
-              }
+          }
+        />
+        <Route
+          path="/questions"
+          element={
+            <Questions
+              courses={courses}
+              setCertificateInfo={handleSetCertificateInfo}
+              setFinalScore={handleSetFinalScore}
             />
-            <Route path="/passed" element={<Passed course={selectedCourse} certificate={certificateInfo} /> } />
-            <Route path="/failed" element={<Failed course={selectedCourse} />} />
-            <Route path="*" element={<Navigate to="/learn" replace />} />
-          </Routes>
-        </ThemeProvider>
-      }
-      {!areUserDetailsPresent && <UserDetails setAreUserDetailsPresent={handleSetAreUserDetailsPresent}/>}
-    </>
-  );
+          }
+        />
+        <Route path="/passed" element={<Passed course={selectedCourse} certificate={certificateInfo} /> } />
+        <Route path="/failed" element={<Failed course={selectedCourse} score={finalScore} />} />
+        <Route path="/userDetails" element={<UserDetails setAreUserDetailsPresent={handleSetAreUserDetailsPresent} />} />
+        <Route path="*" element={<Navigate to="/learn" replace />} />
+      </Routes>
+    </ThemeProvider>
+  )
 }
 
 export default App;

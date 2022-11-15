@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { StyledHome, StyledSelect, StyledSearchContainer, StyledSearchBox, StyledFilterIcon } from '../styles/Home.styled';
 import Courses from './Courses/Courses';
 
-const Home = ({ courses, setSelectedCourse, setAreUserDetailsPresent }) => {
+const Home = ({ courses, setSelectedCourse }) => {
   const [filteredCourses, setFilteredCourses] = useState(courses);
   const [searchText, setSearchText] = useState('');
   const [categories, setCategories] = useState([]);
@@ -37,12 +37,12 @@ const Home = ({ courses, setSelectedCourse, setAreUserDetailsPresent }) => {
     setFilteredCourses(courses.filter((course) => updatedCourseIdsFilter.includes(course.id)));
   }, [searchText, searchCategory])
 
-  const handlePageClick = () => {
-    const userName = window.sessionStorage.getItem('userName');
-    setAreUserDetailsPresent(!!userName);
-  };
+  // const handlePageClick = () => {
+  //   const userName = window.sessionStorage.getItem('userName');
+  //   setAreUserDetailsPresent(!!userName);
+  // };
   return (
-    <StyledHome onClick={handlePageClick}>
+    <StyledHome>
       <h1>DLSA Alappuzha - Learning Portal</h1>
 
       <StyledSearchContainer>
@@ -67,5 +67,4 @@ export default Home;
 Home.propTypes = {
   courses: PropTypes.array.isRequired,
   setSelectedCourse: PropTypes.func.isRequired,
-  setAreUserDetailsPresent: PropTypes.func.isRequired,
 };

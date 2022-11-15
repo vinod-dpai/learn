@@ -78,6 +78,22 @@ export async function getQuestionsFromDB(id) {
   return getMultipleRandom(questionList, 10);
 }
 
+export const clearUserDetails = () => {
+  window.sessionStorage.removeItem('userName');
+  window.sessionStorage.removeItem('dob');
+  window.sessionStorage.removeItem('gender');
+  window.sessionStorage.removeItem('email');
+  window.sessionStorage.removeItem('phno');
+  window.sessionStorage.removeItem('address');
+  window.sessionStorage.removeItem('district');
+  window.sessionStorage.removeItem('taluk');
+  window.sessionStorage.removeItem('religion');
+  window.sessionStorage.removeItem('isStudent');
+  window.sessionStorage.removeItem('schoolOrCollege');
+  window.sessionStorage.removeItem('classOrCourse');
+}
+
+
 export const districtAndTalukInfo = [
   {
     code: 'alappuzha',

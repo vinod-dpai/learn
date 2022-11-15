@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { breakpoint } from '../../Helper';
 
 export const StyledButton = styled.button`
   margin-top: 0.5rem;
@@ -16,3 +17,12 @@ export const StyledButton = styled.button`
     background-color: ${({ theme }) => theme.primary};
   }
 `;
+
+export const StyledHeading = styled.h3`
+  width: 75%;
+  text-align: left;
+  
+  @media (min-width: ${breakpoint.md}) {
+    margin-top: -2rem;
+  }
+`

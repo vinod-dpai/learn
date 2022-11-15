@@ -63,7 +63,7 @@ const Certificate = ({ course, certificate }) => {
         <StyledUserName>{userName}</StyledUserName>
 
         <StyledCourseDetails>
-          has completed the courses
+          has completed the course
         </StyledCourseDetails>
           <StyledSpan>{course.name}</StyledSpan>
         <StyledCourseDate>

@@ -1,30 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { StyledHeader, StyledLogo, StyledNavMain, StyledNav, StyledMenuIcon } from './styles/Header.styled';
+import { clearUserDetails } from './Helper';
 // import { DarkIcon, LightIcon } from './Icons';
 import Logo from '../images/kelsa.png';
 import MenuIcon from '../icons/menu.webp';
 
-const Header = ({ navToggle }) => {
+const Header = ({ navToggle, areUserDetailsPresent, setAreUserDetailsPresent }) => {
+  const navigate = useNavigate();
 
-  const [areuserDetailsPresent, setAreuserDetailsPresent] = useState(!!window.sessionStorage.getItem('userName'));
-
-  const clearUserDetails = () => {
-    window.sessionStorage.removeItem('userName');
-    window.sessionStorage.removeItem('dob');
-    window.sessionStorage.removeItem('gender');
-    window.sessionStorage.removeItem('email');
-    window.sessionStorage.removeItem('phno');
-    window.sessionStorage.removeItem('address');
-    window.sessionStorage.removeItem('district');
-    window.sessionStorage.removeItem('taluk');
-    window.sessionStorage.removeItem('religion');
-    window.sessionStorage.removeItem('isStudent');
-    window.sessionStorage.removeItem('schoolOrCollege');
-    window.sessionStorage.removeItem('classOrCourse');
-
-    setAreuserDetailsPresent(false);
+  const handleLogout = () => {
+    clearUserDetails();
+    setAreUserDetailsPresent(false);
+    navigate('/learn');
   }
 
   return (
@@ -36,7 +25,7 @@ const Header = ({ navToggle }) => {
           <Link to="/about">About</Link>
           {/* <Link to="/admin">Manage</Link> */}
           <Link to="/contact">Contact</Link>
-          {areuserDetailsPresent && <button type="button" onClick={clearUserDetails}>Log out</button>}
+          {areUserDetailsPresent && <button type="button" onClick={handleLogout}>Log out</button>}
         </StyledNav>
         {/* <button type="button" onClick={toggleTheme}>
         {theme === 'dark' && <DarkIcon />}
@@ -50,6 +39,8 @@ const Header = ({ navToggle }) => {
 
 Header.propTypes = {
   navToggle: PropTypes.func,
+  areUserDetailsPresent: PropTypes.bool.isRequired,
+  setAreUserDetailsPresent: PropTypes.func.isRequired,
   // theme: PropTypes.string,
   // toggleTheme: PropTypes.func,
 };

@@ -100,7 +100,12 @@ export const StyledNavDropDown = styled.div`
   align-items: center;
   background: ${({ theme }) => theme.bg};
 
-  a {
+  button{
+    border: none;
+    background-color: inherit;
+  }
+
+  a, button {
     width: 100%;
     margin: 1rem 0;
     text-transform: uppercase;

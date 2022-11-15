@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const StyledContainer = styled.div`
   border: 20px solid tan;
-  font-family: Georgia, serif;
   width: 750px;
   height: 563px;
   display: table-cell;

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { addUserDetails, getQuestionsFromDB } from '../../Helper';
 import { StyledQuestionsContainer } from '../../styles/Questions/Questions.styled';
 
-const Questions = ({ courses, setAreUserDetailsPresent, setCertificateInfo }) => { // , setFinalScore }) => {
+const Questions = ({ courses, setCertificateInfo, setFinalScore }) => {
   const cid = window.sessionStorage.getItem('cid');
   const selectedCourse = courses.find((course) => course.id === Number.parseInt(cid, 10));
   const [questions, setQuestions] = useState([]);
@@ -27,11 +27,6 @@ const Questions = ({ courses, setAreUserDetailsPresent, setCertificateInfo }) =>
 
     fetchData();
   }, [cid, navigate]);
-
-  useEffect(() => {
-    const userName = window.sessionStorage.getItem('userName');
-    setAreUserDetailsPresent(!!userName);
-  });
 
   // useEffect(() => {
   //   setcourse(courses.find((course) => course.id === Number.parseInt(id, 10)));
@@ -70,7 +65,7 @@ const Questions = ({ courses, setAreUserDetailsPresent, setCertificateInfo }) =>
     });
 
     
-    // setFinalScore(score);
+    setFinalScore(score);
     if (score >= 80) {
       const dateOfCompletion = new Date();
 
@@ -126,7 +121,7 @@ const Questions = ({ courses, setAreUserDetailsPresent, setCertificateInfo }) =>
   }, [questions]);
   return (
     cid &&
-    courses.length > 0 && (
+    courses.length > 0 && questions.length > 0 && (
       <StyledQuestionsContainer>
         <h2 style={{ width: '100%', textAlign: 'center', marginBottom: '1rem' }}>
           Examination for {selectedCourse.name}
@@ -135,8 +130,7 @@ const Questions = ({ courses, setAreUserDetailsPresent, setCertificateInfo }) =>
           Go Back To Video
         </button>
         <ol style={{ marginTop: '1rem' }}>
-          {questions.length > 0 &&
-            questions.map((question) => (
+          {questions.map((question) => (
               <li key={question.id}>
                 <h4>{question.question}</h4>
                 <div style={{ display: 'flex' }}>
@@ -223,6 +217,7 @@ const Questions = ({ courses, setAreUserDetailsPresent, setCertificateInfo }) =>
         <button disabled={!areAllQuestionsAnswered} type="button" onClick={calculateScore}>
           Submit
         </button>
+        <p style={{ fontWeight: 'bold', color: 'red' }}>* Submit button will be available only after attempting all questions</p>
       </StyledQuestionsContainer>
     )
   );
@@ -232,7 +227,6 @@ export default Questions;
 
 Questions.propTypes = {
   courses: PropTypes.array.isRequired,
-  setAreUserDetailsPresent: PropTypes.func.isRequired,
   setCertificateInfo: PropTypes.func.isRequired,
-  // setFinalScore: PropTypes.func.isRequired,
+  setFinalScore: PropTypes.func.isRequired,
 };
