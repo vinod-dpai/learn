@@ -57,7 +57,7 @@ const Home = ({ courses, setSelectedCourse }) => {
         <StyledSearchBox placeholder="Type Something To Search..." value={searchText} onChange={(e) => setSearchText(e.target.value)} />
         {/* <StyledFilterIcon src={FilterIcon} alt="Filter" /> */}
       </StyledSearchContainer>
-      <Courses courses={filteredCourses} setSelectedCourse={setSelectedCourse} />
+      <Courses courses={filteredCourses} setSelectedCourse={setSelectedCourse} category={searchCategory} />
     </StyledHome>
   );
 };

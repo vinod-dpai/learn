@@ -11,6 +11,10 @@ export const StyledCourseContainer = styled.div`
   }
 `;
 
+export const StyledHeading = styled.h1`
+  text-transform: uppercase;
+`;
+
 export const StyledCourseMain = styled.div`
   display: flex;
   align-items: center;

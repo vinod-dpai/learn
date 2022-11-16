@@ -21,6 +21,7 @@ export const StyledSearchContainer = styled.div`
 
 export const StyledSelect = styled.select`
   height: 3rem;
+  width: 7rem;
   padding: 0.5rem;
   font-size: ${fontSize.md};
   border-radius: 0.5rem;

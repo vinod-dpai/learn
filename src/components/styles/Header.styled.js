@@ -99,6 +99,7 @@ export const StyledNavDropDown = styled.div`
   text-align: center;
   align-items: center;
   background: ${({ theme }) => theme.bg};
+  z-index: 999;
 
   button{
     border: none;

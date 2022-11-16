@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import {
   StyledCourseContainer,
+  StyledHeading,
   StyledCourseContentContainer,
   StyledCourseContent,
   StyledCourseMain,
   StyledCourseCategory,
 } from '../../styles/Courses/Courses.styled';
 
-const Courses = ({ courses, setSelectedCourse }) => {
+const Courses = ({ courses, setSelectedCourse, category }) => {
   const navigate = useNavigate();
 
   const handleCourseOpen = (id) => {
@@ -19,7 +20,7 @@ const Courses = ({ courses, setSelectedCourse }) => {
   };
   return (
     <StyledCourseContainer>
-      <h1>AVAILABLE COURSES</h1>
+      <StyledHeading>{category} COURSES</StyledHeading>
       <StyledCourseMain>
         {courses.length > 0 &&
           courses.map((course) => (
@@ -40,4 +41,5 @@ export default Courses;
 Courses.propTypes = {
   courses: PropTypes.array.isRequired,
   setSelectedCourse: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
 };
