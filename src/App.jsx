@@ -20,14 +20,13 @@ function App() {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState({});
   const [areUserDetailsPresent, setAreUserDetailsPresent] = useState(false);
-  const [certificateInfo, setCertificateInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
   const [finalScore, setFinalScore] = useState(0);
 
   // const [score, setScore] = useState(0);
 
-  const handleSetCertificateInfo = (certificate) => {
-    console.log(certificate);
-    setCertificateInfo(certificate);
+  const handlesetUserInfo = (user) => {
+    setUserInfo(user);
   }
   const handleSetSelectedCourse = (course) => {
     setSelectedCourse(course);
@@ -103,12 +102,12 @@ function App() {
           element={
             <Questions
               courses={courses}
-              setCertificateInfo={handleSetCertificateInfo}
+              setUserInfo={handlesetUserInfo}
               setFinalScore={handleSetFinalScore}
             />
           }
         />
-        <Route path="/passed" element={<Passed course={selectedCourse} certificate={certificateInfo} /> } />
+        <Route path="/passed" element={<Passed course={selectedCourse} user={userInfo} /> } />
         <Route path="/failed" element={<Failed course={selectedCourse} score={finalScore} />} />
         <Route path="/userDetails" element={<UserDetails setAreUserDetailsPresent={handleSetAreUserDetailsPresent} />} />
         <Route path="*" element={<Navigate to="/learn" replace />} />

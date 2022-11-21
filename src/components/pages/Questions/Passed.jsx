@@ -5,7 +5,7 @@ import Certificate from './Certificate';
 import html2pdf from 'html2pdf.js';
 import { PropTypes } from 'prop-types';
 
-const Passed = ({ course, certificate }) => {
+const Passed = ({ course, user }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,13 +13,21 @@ const Passed = ({ course, certificate }) => {
       navigate('/learn');
     }
     else {
-      const certificateHTML = ReactDOMServer.renderToStaticMarkup(<Certificate course={course} certificate={certificate} />);
-      html2pdf(certificateHTML);
+      const userHTML = ReactDOMServer.renderToStaticMarkup(<Certificate course={course} user={user} />);
+
+      var certOptions = {
+        margin:       1,
+        filename:     'certificate.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+      };
+      html2pdf(userHTML, certOptions);
     }
   }, [course]);
 
   return (
-    <Certificate course={course} certificate={certificate} />
+    <Certificate course={course} user={user} />
   );
 }
 
@@ -27,5 +35,5 @@ export default Passed;
 
 Passed.propTypes = {
   course: PropTypes.object.isRequired,
-  certificate: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 }

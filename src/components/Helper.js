@@ -59,7 +59,6 @@ export async function getCoursesFromDB() {
 export async function addUserDetails(user) {
   const usersCol = collection(db, 'users');
   const userSnapshot = await addDoc(usersCol, user);
-  console.log(userSnapshot);
 }
 
 function getMultipleRandom(arr, num) {

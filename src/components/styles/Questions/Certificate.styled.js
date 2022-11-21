@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import { fontSize } from "../../Helper";
+import Logo from '../../../images/kelsa.png'
 
 export const StyledContainer = styled.div`
   border: 20px solid tan;
-  width: 750px;
+  width: 900px;
   height: 563px;
   display: table-cell;
   vertical-align: middle;
@@ -12,42 +14,50 @@ export const StyledContainer = styled.div`
   justify-content: center;
 `;
 
-export const StyledHeading = styled.div`
-  color: tan;
-  font-size: 40px;
+export const StyledHeading1 = styled.h1`
+  color: #63BEE6;
+  font-size: ${fontSize.lg};
   margin: 20px;
   margin-bottom: 10px;
+  text-transform: uppercase;
+`;
+
+export const StyledHeading2 = styled.h1`
+  color: #99211D;
+  font-size: ${fontSize.md};
+  margin: 20px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
 `;
 
 export const StyledRegNo = styled.div`
   font-family: "Courier New", Courier, monospace;
   margin-bottom: 20px;
+  margin-left: 50px;
+  width: 100%;
+`;
+
+export const StyledLogo = styled.img`
+  position: absolute;
+  z-index: -999;
+  opacity: 0.2;
 `;
 
 export const StyledContent = styled.div`
   margin: 20px;
-  margin-bottom: 0px;
 `;
 
-export const StyledUserName = styled.div`
-  border-bottom: 2px solid black;
-  font-size: 32px;
-  font-style: italic;
-  text-align: center;
-  margin: 10px auto;
-  width: 400px;
+export const StyledDate = styled.div`
+  width: 95%;
+  margin-top: 20px;
 `;
 
-export const StyledCourseDetails = styled.div`
-  margin: 20px;
-  margin-bottom: 5px;
+export const StyledPlace = styled.div`
+  width: 95%;
 `;
 
-export const StyledCourseDate = styled.div`
-  margin: 20px;
-  margin-bottom: 5px;
-`;
-
-export const StyledSpan = styled.span`
-  font-weight: bold;
+export const StyledDisclaimer = styled.span`
+  margin-top: 20px;
+  width: 95%;
+  font-size: ${fontSize.sm}
 `;

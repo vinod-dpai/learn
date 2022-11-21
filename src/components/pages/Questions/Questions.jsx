@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { addUserDetails, getQuestionsFromDB } from '../../Helper';
 import { StyledQuestionsContainer } from '../../styles/Questions/Questions.styled';
 
-const Questions = ({ courses, setCertificateInfo, setFinalScore }) => {
+const Questions = ({ courses, setUserInfo, setFinalScore }) => {
   const cid = window.sessionStorage.getItem('cid');
   const selectedCourse = courses.find((course) => course.id === Number.parseInt(cid, 10));
   const [questions, setQuestions] = useState([]);
@@ -95,7 +95,7 @@ const Questions = ({ courses, setCertificateInfo, setFinalScore }) => {
         district,
         email: window.sessionStorage.getItem('email'),
         id: `${dateOfCompletion.valueOf() + dateOfCompletion.getMilliseconds()}C${selectedCourse.id}`,
-        isStudent: window.sessionStorage.getItem('isStudent'),
+        isStudent: window.sessionStorage.getItem('isStudent') === 'true',
         name: window.sessionStorage.getItem('userName'),
         gender,
         dob: window.sessionStorage.getItem('dob'),
@@ -106,7 +106,7 @@ const Questions = ({ courses, setCertificateInfo, setFinalScore }) => {
         taluk,
       }
 
-      setCertificateInfo({id: user.id, userName: user.name, dateOfCompletion});
+      setUserInfo(user);
 
       addUserDetails(user);
       navigate('/passed');
@@ -227,6 +227,6 @@ export default Questions;
 
 Questions.propTypes = {
   courses: PropTypes.array.isRequired,
-  setCertificateInfo: PropTypes.func.isRequired,
+  setUserInfo: PropTypes.func.isRequired,
   setFinalScore: PropTypes.func.isRequired,
 };

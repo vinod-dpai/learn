@@ -1,11 +1,12 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import '../../..'
-import { StyledContainer, StyledContent, StyledCourseDate, StyledHeading, StyledRegNo, StyledUserName, StyledCourseDetails, StyledSpan } from '../../styles/Questions/Certificate.styled';
+import { StyledContainer, StyledContent, StyledDate, StyledHeading1, StyledHeading2, StyledRegNo, StyledPlace, StyledDisclaimer, StyledLogo } from '../../styles/Questions/Certificate.styled';
 import { Container } from 'react-bootstrap';
+import Logo from '../../../images/kelsa.png'
 
-const Certificate = ({ course, certificate }) => {
-  const { id, userName, dateOfCompletion } = certificate;
+const Certificate = ({ course, user }) => {
+  // const { id, userName, dateOfCompletion } = user;
   const monthsList = [
     'January',
     'February',
@@ -20,10 +21,12 @@ const Certificate = ({ course, certificate }) => {
     'November',
     'December',
   ];
+  
+  const date= new Date(user.dateOfCompletion);
 
-  const completionDate = dateOfCompletion.getDate() > 9 ? dateOfCompletion.getDate() : `0${dateOfCompletion.getDate()}`;
-  const completionMonth = monthsList[dateOfCompletion.getMonth()];
-  const completionYear = dateOfCompletion.getFullYear();
+  const completionDate = date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`;
+  const completionMonth = monthsList[date.getMonth()];
+  const completionYear = date.getFullYear();
 
 //   return (
 //     <StyledContainer>
@@ -55,12 +58,21 @@ const Certificate = ({ course, certificate }) => {
   return (
     <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <StyledContainer>
-        <StyledHeading>Certificate of Completion</StyledHeading>
-
-        <StyledRegNo>Reg No: {id}</StyledRegNo>
-        <StyledContent>This is to certify that</StyledContent>
-
-        <StyledUserName>{userName}</StyledUserName>
+        <StyledHeading1>District Legal Services Authority, Alappuzha</StyledHeading1>
+        <StyledHeading2>Certificate of Participation</StyledHeading2>
+        <StyledLogo src={Logo} alt="Logo" />
+        <StyledRegNo>Reg No: {user.id}</StyledRegNo>
+        <StyledContent>Certified that {user.gender === 'Male' ? 'Sri.' : 'Smt.'} {user.name}, {user.isStudent ? `${user.classOrCourse}, ${user.schoolOrCollege}` : `${user.address.replace(/\n/g, ',').replace(/,,/g, ', ').replace(/  /g, ' ')}`} has successfully attended the online Legal Awareness class on {course.name} conducted by this authority on {`${completionDate} ${completionMonth}, ${completionYear}`}.</StyledContent>
+        <StyledDate>
+          Dated: {`${completionDate} ${completionMonth}, ${completionYear}`}
+        </StyledDate>
+        <StyledPlace>
+          ALAPPUZHA
+        </StyledPlace>
+        <StyledDisclaimer>
+          *This is an online generated certificate.In case of any dispute, the authenticity of the certificate can be verified from this authority,by referring to Reg No.
+        </StyledDisclaimer>
+        {/* <StyledUserName>{userName}</StyledUserName>
 
         <StyledCourseDetails>
           has completed the course
@@ -69,7 +81,7 @@ const Certificate = ({ course, certificate }) => {
         <StyledCourseDate>
           on
         </StyledCourseDate>
-        <StyledSpan>{`${completionDate} ${completionMonth}, ${completionYear}`}</StyledSpan>
+        <StyledSpan>{`${completionDate} ${completionMonth}, ${completionYear}`}</StyledSpan> */}
       </StyledContainer>
     </Container>
 //     // <div>
@@ -86,5 +98,5 @@ export default Certificate;
 
 Certificate.propTypes = {
   selectedCourse: PropTypes.object.isRequired,
-  certificate: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 }
