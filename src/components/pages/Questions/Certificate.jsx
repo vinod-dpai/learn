@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import '../../..'
-import { StyledContainer, StyledContent, StyledDate, StyledHeading1, StyledHeading2, StyledRegNo, StyledPlace, StyledDisclaimer, StyledLogo } from '../../styles/Questions/Certificate.styled';
+import { StyledContainer, StyledContent, StyledHeading1, StyledHeading2, StyledHeading3, StyledRegNo, StyledPlace, StyledDisclaimer, StyledLogo } from '../../styles/Questions/Certificate.styled';
 import { Container } from 'react-bootstrap';
 import Logo from '../../../images/kelsa.png'
 
@@ -60,12 +60,10 @@ const Certificate = ({ course, user }) => {
       <StyledContainer>
         <StyledHeading1>District Legal Services Authority, Alappuzha</StyledHeading1>
         <StyledHeading2>Certificate of Participation</StyledHeading2>
+        <StyledHeading3>Leap Towards Legal Awareness</StyledHeading3>
         <StyledLogo src={Logo} alt="Logo" />
         <StyledRegNo>Reg No: {user.id}</StyledRegNo>
         <StyledContent>Certified that {user.gender === 'Male' ? 'Sri.' : 'Smt.'} {user.name}, {user.isStudent ? `${user.classOrCourse}, ${user.schoolOrCollege}` : `${user.address.replace(/\n/g, ',').replace(/,,/g, ', ').replace(/  /g, ' ')}`} has successfully attended the online Legal Awareness class on {course.name} conducted by this authority on {`${completionDate} ${completionMonth}, ${completionYear}`}.</StyledContent>
-        <StyledDate>
-          Dated: {`${completionDate} ${completionMonth}, ${completionYear}`}
-        </StyledDate>
         <StyledPlace>
           ALAPPUZHA
         </StyledPlace>
