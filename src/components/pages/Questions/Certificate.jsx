@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import '../../..'
-import { StyledContainer, StyledContent, StyledHeading1, StyledHeading2, StyledHeading3, StyledRegNo, StyledPlace, StyledDisclaimer, StyledLogo } from '../../styles/Questions/Certificate.styled';
+import { StyledContainer, StyledContent, StyledHeading1, StyledHeading2, StyledHeading3, StyledRegNo, StyledSignature, StyledDisclaimer, StyledLogo } from '../../styles/Questions/Certificate.styled';
 import { Container } from 'react-bootstrap';
 import Logo from '../../../images/kelsa.png'
 
@@ -58,17 +58,43 @@ const Certificate = ({ course, user }) => {
   return (
     <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <StyledContainer>
+        <StyledLogo src={Logo} alt="Logo" />
         <StyledHeading1>District Legal Services Authority, Alappuzha</StyledHeading1>
         <StyledHeading2>Certificate of Participation</StyledHeading2>
         <StyledHeading3>Leap Towards Legal Awareness</StyledHeading3>
-        <StyledLogo src={Logo} alt="Logo" />
         <StyledRegNo>Reg No: {user.id}</StyledRegNo>
-        <StyledContent>Certified that {user.gender === 'Male' ? 'Sri.' : 'Smt.'} {user.name}, {user.isStudent ? `${user.classOrCourse}, ${user.schoolOrCollege}` : `${user.address.replace(/\n/g, ',').replace(/,,/g, ', ').replace(/  /g, ' ')}`} has successfully attended the online Legal Awareness class on {course.name} conducted by this authority on {`${completionDate} ${completionMonth}, ${completionYear}`}.</StyledContent>
-        <StyledPlace>
-          ALAPPUZHA
-        </StyledPlace>
+        <StyledContent>
+          <span style={{ paddingLeft: '2rem' }}>Certified that Sri./Smt.</span>
+          <span style={{ fontSize: '0.95rem', fontWeight: 'bolder' }}>{user.name}, </span>
+          {user.isStudent &&
+            <span>
+              <span style={{ fontSize: '0.95rem', fontWeight: 'bolder' }}>{user.classOrCourse} </span>
+              <span>class/course, </span>
+              <span style={{ fontSize: '0.95rem', fontWeight: 'bolder' }}>{user.schoolOrCollege} </span>
+              <span>school/college, </span>
+            </span>}
+          {!user.isStudent &&
+            <span style={{ fontSize: '0.95rem', fontWeight: 'bolder' }}>
+              {`${user.address.replace(/\n/g, ',').replace(/,,/g, ', ').replace(/  /g, ' ')} `}
+            </span>
+          }
+          <span>has successfully attended the online Legal Awareness class on </span>
+          <span style={{ fontSize: '0.95rem', fontWeight: 'bolder' }}>{course.name} </span>
+          <span>conducted by this authority on </span>
+          <span style={{ fontSize: '0.95rem', fontWeight: 'bolder' }}>{`${completionDate} ${completionMonth}, ${completionYear}`}.</span>
+          {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Certified that {user.gender === 'Male' ? 'Sri.' : 'Smt.'} {user.name}, {user.isStudent ? `${user.classOrCourse} class/course, ${user.schoolOrCollege} school/college` : `${user.address.replace(/\n/g, ',').replace(/,,/g, ', ').replace(/  /g, ' ')}`} has successfully attended the online Legal Awareness class on {course.name} conducted by this authority on {`${completionDate} ${completionMonth}, ${completionYear}`}. */}
+        </StyledContent>
+        <StyledSignature>
+          <div>
+            Issued By
+          </div>
+          <div>
+            <p>Secretary (Sub Judge)</p>
+            <p>DLSA, Alappuzha</p>
+          </div>
+        </StyledSignature>
         <StyledDisclaimer>
-          *This is an online generated certificate.In case of any dispute, the authenticity of the certificate can be verified from this authority,by referring to Reg No.
+          *This is an online generated certificate which does not require signature. The authenticity of the certificate can be verified from this authority referring to the Reg No.
         </StyledDisclaimer>
         {/* <StyledUserName>{userName}</StyledUserName>
 

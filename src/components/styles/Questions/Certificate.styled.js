@@ -3,9 +3,10 @@ import { fontSize } from "../../Helper";
 import Logo from '../../../images/kelsa.png'
 
 export const StyledContainer = styled.div`
-  border: 20px solid #05014A;
+  border: 10px solid #99211D;
   width: 900px;
-  height: 563px;
+  height: max-content;
+  padding: 1rem;
   display: table-cell;
   vertical-align: middle;
   display: flex;
@@ -15,10 +16,11 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledHeading1 = styled.h1`
-  color: #5D99CE;
+  color: #1F3864;
   font-family: 'Secular One', sans-serif;
-  font-size: ${fontSize.lg};
+  font-size: ${fontSize.xl};
   margin: 20px;
+  margin-top: 10px;
   margin-bottom: 10px;
   text-transform: uppercase;
 `;
@@ -28,6 +30,7 @@ export const StyledHeading2 = styled.h3`
   font-family: 'Secular One', sans-serif;
   font-size: ${fontSize.md};
   margin: 20px;
+  margin-top: 10px;
   margin-bottom: 0;
   text-transform: uppercase;
 `;
@@ -37,25 +40,29 @@ export const StyledHeading3 = styled.h3`
   font-family: 'Pacifico', sans-serif;
   font-size: ${fontSize.base};
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 export const StyledRegNo = styled.div`
   font-family: "Courier New", Courier, monospace;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-left: 50px;
   width: 100%;
+  font-weight: bold;
 `;
 
 export const StyledLogo = styled.img`
-  position: absolute;
-  z-index: -999;
-  opacity: 0.05;
+  width: 7rem;
+  height: 5rem;
 `;
 
 export const StyledContent = styled.div`
   margin: 20px;
-  font-family: 'Lora', sans-serif;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-family: 'Arial', sans-serif;
+  font-size: ${fontSize.md};
+  line-height: 180%;
 `;
 
 // export const StyledDate = styled.div`
@@ -63,14 +70,29 @@ export const StyledContent = styled.div`
 //   margin-top: 20px;
 // `;
 
-export const StyledPlace = styled.div`
-  width: 95%;
-  font-family: 'Lora', sans-serif;
+export const StyledSignature = styled.div`
+  width: 85%;
+  font-family: 'Arial', sans-serif;
+  font-size: ${fontSize.base};
+  text-align: right;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
+    justify-content: center;
+
+    p {
+      margin-bottom: 0;
+      font-weight: bold;
+    }
+  }
 `;
 
 export const StyledDisclaimer = styled.span`
   margin-top: 20px;
   width: 95%;
-  font-size: ${fontSize.sm};
+  font-size: ${fontSize.xs};
   font-family: 'Lora', sans-serif;
 `;

@@ -16,10 +16,10 @@ const Passed = ({ course, user }) => {
       const userHTML = ReactDOMServer.renderToStaticMarkup(<Certificate course={course} user={user} />);
 
       var certOptions = {
-        margin:       1,
+        margin:       0.5,
         filename:     'certificate.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
+        html2canvas:  { scale: 1 },
         jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
       };
       html2pdf(userHTML, certOptions);

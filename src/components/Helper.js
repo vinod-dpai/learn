@@ -34,6 +34,8 @@ export const breakpoint = {
 };
 
 export const fontSize = {
+  xxs: '0.25rem',
+  xs: '0.5rem',
   sm: '0.75rem',
   base: '1rem',
   md: '1.25rem',
