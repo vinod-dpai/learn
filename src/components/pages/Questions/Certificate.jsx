@@ -66,16 +66,16 @@ const Certificate = ({ course, user }) => {
         <StyledContent>
           <span style={{ paddingLeft: '2rem' }}>Certified that Sri./Smt.</span>
           <span style={{ fontSize: '0.95rem', fontWeight: 'bolder' }}>{user.name}, </span>
-          {user.isStudent &&
+          {user && user.isStudent &&
             <span>
               <span style={{ fontSize: '0.95rem', fontWeight: 'bolder' }}>{user.classOrCourse} </span>
               <span>class/course, </span>
               <span style={{ fontSize: '0.95rem', fontWeight: 'bolder' }}>{user.schoolOrCollege} </span>
               <span>school/college, </span>
             </span>}
-          {!user.isStudent &&
+          {user && !user.isStudent &&
             <span style={{ fontSize: '0.95rem', fontWeight: 'bolder' }}>
-              {`${user.address.replace(/\n/g, ',').replace(/,,/g, ', ').replace(/  /g, ' ')} `}
+              {user.address && `${user.address.replace(/\n/g, ',').replace(/,,/g, ', ').replace(/  /g, ' ')} `}
             </span>
           }
           <span>has successfully attended the online Legal Awareness class on </span>

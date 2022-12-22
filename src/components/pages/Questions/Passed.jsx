@@ -9,7 +9,7 @@ const Passed = ({ course, user }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!course) {
+    if (Object.keys(course).length === 0 || Object.keys(user).length === 0) {
       navigate('/learn');
     }
     else {
@@ -24,7 +24,7 @@ const Passed = ({ course, user }) => {
       };
       html2pdf(userHTML, certOptions);
     }
-  }, [course]);
+  }, [course, user]);
 
   return (
     <Certificate course={course} user={user} />
